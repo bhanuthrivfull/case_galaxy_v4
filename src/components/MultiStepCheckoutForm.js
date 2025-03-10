@@ -167,10 +167,49 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
     cardCvc: "CVV must be 3 digits",
   }
 
+
+  const personal_details = {
+    personal_details: {
+        title: "Personal Details",
+        full_name: "Fulldsds Name",
+        name_err_msg: { field: "name", required_err: "is required", err_msg: "Name should contain only letters and spaces (2-50 characters)" },
+        email: "Email",
+        email_err_msg: { field: "email", required_err: "is required", err_msg: "Please enter a valid email address" },
+        phone: "Phone",
+        phone_err_msg: { field: "phone", required_err: "is required", err_msg: "Phone number must be 10 digits and start with 6, 7, 8, or 9" },
+        address: "Address",
+        address_err_msg: { field: "address", required_err: "is required", err_msg: "Address is required (minimum 10 characters)" },
+        city_name: "City",
+        city_err_msg: { field: "city", required_err: "is required", err_msg: "Enter a valid city" },
+        state_name: "State",
+        state_err_msg: { field: "state", required_err: "is required", err_msg: "Enter a valid state" },
+        zip: "Zip Code",
+        zip_err_msg: { field: "zip", required_err: "is required", err_msg: "ZIP code must be 6 digits" },
+    },
+    card_details: {
+        title: "Card Details",
+        card_number: "Card Number",
+        card_err_msg: { field: "card", required_err: "is required", err_msg: "Card number must be 16 digits" },
+        expiry: "Expiry Date",
+        expriy_err_msg: { field: "card", required_err: "expiry is required", err_msg: "Invalid expiry date (MM/YY)" },
+        cvv: "CVV",
+        cvv_err_msg: { field: "card", required_err: "cvv is required", err_msg: "CVV must be 3 digits" },
+    }
+};
+
+
+
+
   const validateField = (name, value) => {
-    if (!value) return `${name.charAt(0).toUpperCase() + name.slice(1)} is required`
+    const section = name in personal_details.personal_details ? personal_details.personal_details : personal_details.card_details;
+    const errorField = section[`${name}_err_msg`];
+
+    if (!value) {
+        return `${errorField?.field || name} ${errorField?.required_err || "is required"}`;
+    }
+
     if (patterns[name] && !patterns[name].test(value.replace(/\s/g, ""))) {
-      return errorMessages[name]
+        return errorField?.err_msg || "Invalid input";
     }
 
     //adress validation
@@ -570,7 +609,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                   </Typography>
                   <TextField
                     fullWidth
-                    label="Full Name"
+                    label={personal_details.personal_details.full_name}
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}

@@ -1,0 +1,340 @@
+[
+    {
+      "language": "en",
+      "translations": {
+        "title": "Case Galaxy",
+        "logout": "Logout",
+        "cart_modal": {
+          "title": "Your Cart",
+          "btn_title": "Proceed to Buy",
+          "cart_empty": "Your cart is empty",
+          "remove": "Remove",
+          "total": "Total"
+        },
+        "sm_menu": "Menu",
+        "hero_carousel": [
+          {
+            "type": "video",
+            "src": "/assets/banner.mp4",
+            "heading": "Elevate Your Device",
+            "subheading": "Futuristic Protection for Modern Smartphones"
+          },
+          {
+            "type": "image",
+            "src": "/assets/Mobile_banner1.jpg",
+            "heading": "Stylish Designs",
+            "subheading": "Protect Your Device in Style"
+          },
+          {
+            "type": "image",
+            "src": "/assets/Mobile_banner2.jpg",
+            "heading": "Durable Materials",
+            "subheading": "Long-lasting Protection for Every Occasion"
+          },
+          {
+            "type": "image",
+            "src": "/assets/Mobile_banner3.jpeg",
+            "heading": "Lightweight Covers",
+            "subheading": "Comfort and Convenience for Daily Use"
+          }
+        ],
+        "carousel_btn": "Explore Covers",
+        "add_to_cart":"ADD TO CART",
+        "added_to_cart":"added to cart!",
+        "save_title":"Save",
+        "reviews":"reviews",
+          "in_stock":"In Stock",
+          "out_of_stock":"Out of Stock",
+        "usp_items": [
+          {
+            "title": "Eco-Friendly",
+            "description": "Crafted from sustainable materials."
+          },
+          {
+            "title": "Free Shipping",
+            "description": "Free shipping available for all orders."
+          },
+          {
+            "title": "Customizable",
+            "description": "Add your own touch with custom designs."
+          }
+        ],
+        "products_title": "Products",
+        "testomonial_title": "Customer Testimonials",
+        "testomonial_data": [
+          {
+            "id": 1,
+            "name": "Raju",
+            "rating": 5,
+            "comment": "Very durable and looks super sleek. Totally worth it.",
+            "avatar": "https://media.gettyimages.com/id/175990379/video/portrait-of-a-horrible-boss.jpg?s=640x640&k=20&c=rrcEN7JwxCS3NEPBD6eHN-R_I7zUv98CL-lpMCzaDGA="
+          },
+          {
+            "id": 2,
+            "name": "Ram",
+            "rating": 5,
+            "comment": "Stylish and strong, it makes my phone look amazing!",
+            "avatar": "https://media.istockphoto.com/id/849455442/photo/smiling-businessman-in-his-office.jpg?s=612x612&w=0&k=20&c=PcM0ei31yAmQLV_LjzQODC424QDcMeEDff9r-gmJyu0="
+          },
+          {
+            "id": 3,
+            "name": "Krishna",
+            "rating": 5,
+            "comment": "Perfect fit and looks amazing! The case feels premium.",
+            "avatar": "https://img.freepik.com/premium-photo/smiling-businessman-formal-wear-using-tablet-while-standing-rooftop_232070-1360.jpg"
+          }
+        ],
+        "lead_capture": {
+          "title": "Get 15% Exclusive Offers",
+          "alert": "Congratulations! You got a 15% flat discount.",
+          "btn_title": "Submit",
+          "name_label": "Full Name",
+          "number_label": "Phone Number"
+        },
+        "benefits_data": {
+          "title": "Exceptional Features",
+          "benefits": [
+            "Advanced heat dissipation for improved performance.",
+            "Scratch-resistant surface with anti-glare properties.",
+            "Eco-friendly materials used for sustainable design.",
+            "Enhanced grip for better handling and usability.",
+            "Optimized for wireless charging with no interference."
+          ]
+        },
+        "our_impact": {
+          "title": "Our Impact",
+          "status_data": [
+            { "value": "90%", "label": "Customer Satisfaction" },
+            { "value": "200+", "label": "Unique Designs" },
+            { "value": "10M+", "label": "Covers Sold" }
+          ]
+        },
+        "footer":{
+          "col_one":{"title":"Case Galaxy","description":"Elevating device protection since 2025."},
+          "col_two":{"title":"Contact Us","description":"Phone"},
+          "col_three":{"title":"Follow Us","fb_url":"https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F","insta_url":"https://www.instagram.com/?hl=en","twitter_url":"https://x.com/?lang=en&mx=2"},
+          "copy_right":"All rights reserved."
+        },
+        "details_title":"Details",
+        "payment_title":"Payment",
+        "confirm_title":"Confirm",
+        "personal_details":{
+            "title":"Personal Details",
+            "full_name":"Full Name",
+            "name_err_msg":{"field":"name","required_err":"is required","err_msg":"Name should contain only letters and spaces (2-50 characters)"},
+            "email":"Email",
+            "email_err_msg":{"field":"email","required_err":"is required","err_msg":"Please enter a valid email address"},
+            "phone":"Phone",
+            "phone_err_msg":{"field":"phone","required_err":"is required","err_msg":"Phone number must be 10 digits and start with 6, 7, 8, or 9"},
+            "address":"Address",
+            "address_err_msg":{"field":"address","required_err":"is required","err_msg":"Address is required (minimum 10 characters)"},
+            "city_name":"City",
+            "city_err_msg":{"field":"city","required_err":"is required","err_msg":"Enter a valid city"},
+            "state_name":"State",
+            "state_err_msg":{"field":"state","required_err":"is required","err_msg":"Enter a valid state"},
+            "zip":"Zip Code",
+            "zip_err_msg":{"field":"zip","required_err":"is required","err_msg":"ZIP code must be 6 digits"}
+        },
+        "card_details":{
+            "title":"Card Details",
+            "card_number":"Card Number",
+            "card_err_msg":{"field":"card","required_err":"is required","err_msg":"Card number must be 16 digits"},
+            "expiry":"Expiry Date",
+            "expriy_err_msg":{"field":"card","required_err":"expiry is required","err_msg":"Invalid expiry date (MM/YY)"},
+            "cvv":"CVV",
+            "cvv_err_msg":{"field":"card","required_err":"cvv is required","err_msg":"CVV must be 3 digits"}
+        }
+      }
+    },
+    {
+      "language": "zh",
+      "translations": {
+        "title": "案例银河",
+        "logout": "登出",
+        "cart_modal": {
+          "title": "您的购物车",
+          "btn_title": "继续购买",
+          "cart_empty": "您的购物车为空",
+          "remove": "移除",
+          "total": "总计"
+        },
+        "sm_menu": "菜单",
+        "hero_carousel": [
+          {
+            "type": "video",
+            "src": "/assets/banner.mp4",
+            "heading": "提升您的设备",
+            "subheading": "为现代智能手机提供未来保护"
+          },
+          {
+            "type": "image",
+            "src": "/assets/Mobile_banner1.jpg",
+            "heading": "时尚设计",
+            "subheading": "让您的设备时尚又安全"
+          },
+          {
+            "type": "image",
+            "src": "/assets/Mobile_banner2.jpg",
+            "heading": "耐用材料",
+            "subheading": "为每一个场合提供持久保护"
+          },
+          {
+            "type": "image",
+            "src": "/assets/Mobile_banner3.jpeg",
+            "heading": "轻量化保护壳",
+            "subheading": "日常使用的舒适与便利"
+          }
+        ],
+        "carousel_btn": "探索保护壳",
+        "add_to_cart":"加入购物车",
+        "added_to_cart":"已加入购物车！",
+        "save_title":"保存",
+        "reviews":"评价",
+        "in_stock":"有货 ",
+        "out_of_stock":"缺货",
+        "usp_items": [
+          {
+            "title": "环保材料",
+            "description": "采用可持续材料制成。"
+          },
+          {
+            "title": "免费配送",
+            "description": "所有订单均可享受免费配送。"
+          },
+          {
+            "title": "可定制",
+            "description": "使用定制设计增添个人风格。"
+          }
+        ],
+        "products_title": "产品",
+        "testomonial_title": "客户评价",
+       "testomonial_data": [
+      {
+        "id": 1,
+        "name": "王伟",
+        "rating": 5,
+        "comment": "非常耐用，看起来很时尚，完全值得购买。",
+        "avatar": "https://media.gettyimages.com/id/175990379/video/portrait-of-a-horrible-boss.jpg?s=640x640&k=20&c=rrcEN7JwxCS3NEPBD6eHN-R_I7zUv98CL-lpMCzaDGA="
+      },
+      {
+        "id": 2,
+        "name": "李娜",
+        "rating": 5,
+        "comment": "时尚又结实，让我的手机焕然一新！",
+        "avatar": "https://media.istockphoto.com/id/849455442/photo/smiling-businessman-in-his-office.jpg?s=612x612&w=0&k=20&c=PcM0ei31yAmQLV_LjzQODC424QDcMeEDff9r-gmJyu0="
+      },
+      {
+        "id": 3,
+        "name": "张强",
+        "rating": 5,
+        "comment": "完美贴合，看起来很棒！手感非常高级。",
+        "avatar": "https://img.freepik.com/premium-photo/smiling-businessman-formal-wear-using-tablet-while-standing-rooftop_232070-1360.jpg"
+      }
+  ],
+        "lead_capture": {
+          "title": "获取15%专属优惠",
+          "alert": "恭喜！您获得15%折扣。",
+          "btn_title": "提交",
+          "name_label": "全名",
+          "number_label": "电话号码"
+        },
+        "benefits_data": {
+          "title": "卓越功能",
+          "benefits": [
+            "先进的散热设计，提高设备性能。",
+            "防刮表面，具有防眩光特性。",
+            "采用环保材料，实现可持续设计。",
+            "增强握持感，提高操作体验。",
+            "优化无线充电，无干扰。"
+          ]
+        },
+        "our_impact": {
+          "title": "我们的影响",
+          "status_data": [
+            { "value": "90%", "label": "客户满意度" },
+            { "value": "200+", "label": "独特设计" },
+            { "value": "10M+", "label": "已售保护壳" }
+          ]
+        },
+        "footer":{
+          "col_one": {"title": "案例银河", "description": "自2025年以来提升设备保护。"},
+          "col_two": {"title": "联系我们", "description": "电话"},
+          "col_three": {"title": "关注我们", "fb_url": "https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F", "insta_url": "https://www.instagram.com/?hl=en", "twitter_url": "https://x.com/?lang=en&mx=2"},
+          "copy_right": "版权所有。"
+        },
+        "details_title":"详情",
+        "payment_title":"付款",
+        "confirm_title":"确认",
+        "personal_details": {
+            "title": "个人信息",
+            "full_name": "全名",
+            "name_err_msg": {
+              "field": "name",
+              "required_err": "是必填项",
+              "err_msg": "姓名只能包含字母和空格（2-50个字符）"
+            },
+            "email": "电子邮件",
+            "email_err_msg": {
+              "field": "email",
+              "required_err": "是必填项",
+              "err_msg": "请输入有效的电子邮件地址"
+            },
+            "phone": "电话",
+            "phone_err_msg": {
+              "field": "phone",
+              "required_err": "是必填项",
+              "err_msg": "电话号码必须是10位数字，并以6、7、8或9开头"
+            },
+            "address": "地址",
+            "address_err_msg": {
+              "field": "address",
+              "required_err": "是必填项",
+              "err_msg": "地址是必填项（至少10个字符）"
+            },
+            "city_name": "城市",
+            "city_err_msg": {
+              "field": "city",
+              "required_err": "是必填项",
+              "err_msg": "请输入有效的城市名称"
+            },
+            "state_name": "省份",
+            "state_err_msg": {
+              "field": "state",
+              "required_err": "是必填项",
+              "err_msg": "请输入有效的省份名称"
+            },
+            "zip": "邮政编码",
+            "zip_err_msg": {
+              "field": "zip",
+              "required_err": "是必填项",
+              "err_msg": "邮政编码必须是6位数字"
+            }
+          },
+          "card_details": {
+            "title": "银行卡信息",
+            "card_number": "银行卡号",
+            "card_err_msg": {
+              "field": "card",
+              "required_err": "是必填项",
+              "err_msg": "银行卡号必须是16位数字"
+            },
+            "expiry": "有效期",
+            "expriy_err_msg": {
+              "field": "card",
+              "required_err": "有效期是必填项",
+              "err_msg": "无效的有效期（MM/YY）"
+            },
+            "cvv": "CVV",
+            "cvv_err_msg": {
+              "field": "card",
+              "required_err": "CVV是必填项",
+              "err_msg": "CVV必须是3位数字"
+            }
+          }
+      }
+    }
+  ]
+  
+  
+  
+  
