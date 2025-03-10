@@ -155,61 +155,29 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
 
   // Error messages
   const errorMessages = {
-    name: "Name should contain only letters and spaces (2-50 characters)",
-    email: "Please enter a valid email address",
-    phone: "Phone number must be 10 digits and start with 6, 7, 8, or 9",
-    address: "Address is required (minimum 10 characters)",
-    city: "Enter a valid city",
-    state: "Enter a valid state",
-    zipCode: "ZIP code must be 6 digits",
-    cardNumber: "Card number must be 16 digits",
-    cardExpiry: "Invalid expiry date (MM/YY)",
-    cardCvc: "CVV must be 3 digits",
+    name: translations?.personal_details?.name_err_msg?.err_msg,
+    email: translations?.personal_details?.email_err_msg?.err_msg,
+    phone: translations?.personal_details?.phone_err_msg?.err_msg,
+    address: translations?.personal_details?.address_err_msg?.err_msg,
+    city: translations?.personal_details?.city_err_msg?.err_msg,
+    state: translations?.personal_details?.state_err_msg?.err_msg,
+    zipCode: translations?.personal_details?.zipCode_err_msg?.err_msg,
+    cardNumber: translations?.personal_details?.cardNumber_err_msg?.err_msg,
+    cardExpiry: translations?.personal_details?.cardExpiry_err_msg?.err_msg,
+    cardCvc: translations?.personal_details?.cardCvc_err_msg?.err_msg,
   }
 
-
-  const personal_details = {
-    personal_details: {
-        title: "Personal Details",
-        full_name: "Fulldsds Name",
-        name_err_msg: { field: "name", required_err: "is required", err_msg: "Name should contain only letters and spaces (2-50 characters)" },
-        email: "Email",
-        email_err_msg: { field: "email", required_err: "is required", err_msg: "Please enter a valid email address" },
-        phone: "Phone",
-        phone_err_msg: { field: "phone", required_err: "is required", err_msg: "Phone number must be 10 digits and start with 6, 7, 8, or 9" },
-        address: "Address",
-        address_err_msg: { field: "address", required_err: "is required", err_msg: "Address is required (minimum 10 characters)" },
-        city_name: "City",
-        city_err_msg: { field: "city", required_err: "is required", err_msg: "Enter a valid city" },
-        state_name: "State",
-        state_err_msg: { field: "state", required_err: "is required", err_msg: "Enter a valid state" },
-        zip: "Zip Code",
-        zip_err_msg: { field: "zip", required_err: "is required", err_msg: "ZIP code must be 6 digits" },
-    },
-    card_details: {
-        title: "Card Details",
-        card_number: "Card Number",
-        card_err_msg: { field: "card", required_err: "is required", err_msg: "Card number must be 16 digits" },
-        expiry: "Expiry Date",
-        expriy_err_msg: { field: "card", required_err: "expiry is required", err_msg: "Invalid expiry date (MM/YY)" },
-        cvv: "CVV",
-        cvv_err_msg: { field: "card", required_err: "cvv is required", err_msg: "CVV must be 3 digits" },
-    }
-};
-
-
-
-
   const validateField = (name, value) => {
-    const section = name in personal_details.personal_details ? personal_details.personal_details : personal_details.card_details;
-    const errorField = section[`${name}_err_msg`];
+    const errorKey = `${name}_err_msg`;
+    if (translations?.personal_details[errorKey]) {
+      console.log();
+      console.log(translations?.personal_details[errorKey].required_err);
 
-    if (!value) {
-        return `${errorField?.field || name} ${errorField?.required_err || "is required"}`;
-    }
+      if (!value) return `${translations?.personal_details[errorKey].field.charAt(0).toUpperCase() + translations?.personal_details[errorKey].field.slice(1)} ${translations?.personal_details[errorKey].required_err}`
+      if (patterns[name] && !patterns[name].test(value.replace(/\s/g, ""))) {
+        return errorMessages[name]
+      }
 
-    if (patterns[name] && !patterns[name].test(value.replace(/\s/g, ""))) {
-        return errorField?.err_msg || "Invalid input";
     }
 
     //adress validation
@@ -429,7 +397,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
     <motion.div variants={fadeInUp}>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
         <Typography variant="h5" gutterBottom style={{ color: "white" }}>
-          Select Card Type
+         {translations?.select_card_type || "Loading..."}
         </Typography>
         <FormControl component="fieldset" error={!!errors.cardType}>
           <RadioGroup name="cardType" value={formData.cardType} onChange={handleInputChange}>
@@ -605,11 +573,11 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                     gutterBottom
                     style={{ color: "white" }}
                   >
-                    Personal Details
+                    {translations?.personal_details.title || "Loading...."}
                   </Typography>
                   <TextField
                     fullWidth
-                    label={personal_details.personal_details.full_name}
+                    label={translations?.personal_details?.full_name}
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
@@ -622,7 +590,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
 
                   <TextField
                     fullWidth
-                    label="Email"
+                    label={translations?.personal_details?.email}
                     name="email"
                     type="email"
                     value={formData.email}
@@ -634,7 +602,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                   />
                   <TextField
                     fullWidth
-                    label="Phone"
+                    label={translations?.personal_details?.phone}
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
@@ -645,7 +613,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                   />
                   <TextField
                     fullWidth
-                    label="Address"
+                    label={translations?.personal_details?.address}
                     name="address"
                     multiline
                     rows={3}
@@ -665,7 +633,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                   >
                     <TextField
                       fullWidth
-                      label="City"
+                      label={translations?.personal_details?.city_name}
                       name="city"
                       value={formData.city}
                       onChange={handleInputChange}
@@ -676,7 +644,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                     />
                     <TextField
                       fullWidth
-                      label="State"
+                      label={translations?.personal_details?.state_name}
                       name="state"
                       value={formData.state}
                       onChange={handleInputChange}
@@ -688,7 +656,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                   </Box>
                   <TextField
                     fullWidth
-                    label="ZIP Code"
+                    label={translations?.personal_details?.zip}
                     name="zipCode"
                     value={formData.zipCode}
                     onChange={handleInputChange}
@@ -709,7 +677,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                     gutterBottom
                     style={{ color: "white" }}
                   >
-                    Payment Method
+                    {translations?.payment_method || "Loading..."}
                   </Typography>
                   <FormControl
                     component="fieldset"
@@ -754,12 +722,12 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                               >
                                 <LocalShipping />
                                 <Box>
-                                  <Typography>Cash on Delivery</Typography>
+                                  <Typography>{translations?.cash_on_delivery || "Loading..."}</Typography>
                                   <Typography
                                     variant="caption"
                                     color="text.secondary"
                                   >
-                                    Pay when you receive
+                                    {translations?.Pay_when_you_receive || "Loading.."}
                                   </Typography>
                                 </Box>
                               </Box>
@@ -797,12 +765,12 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                               >
                                 <CreditCard />
                                 <Box>
-                                  <Typography>Credit/Debit Card</Typography>
+                                  <Typography>{translations?.Credit_Debit_Card || "Loading..."}</Typography>
                                   <Typography
                                     variant="caption"
                                     color="text.secondary"
                                   >
-                                    Secure online payment
+                                    {translations?.Secure_online_payment || "Loading..."}
                                   </Typography>
                                 </Box>
                               </Box>
@@ -854,11 +822,11 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                   }}
                 >
                   <Typography variant="h5" gutterBottom sx={{ color: "white" }}>
-                    Card Details
+                    {translations?.card_details || "Loading..."}
                   </Typography>
                   <TextField
                     fullWidth
-                    label="Card Number"
+                    label={translations?.personal_details.card_number || "Loading..."}
                     name="cardNumber"
                     value={formData.cardNumber}
                     onChange={handleInputChange}
@@ -877,7 +845,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                     }}
                   >
                     <TextField
-                      label="Expiry Date"
+                      label={translations?.personal_details.expiry || "Loading..."}
                       name="cardExpiry"
                       value={formData.cardExpiry}
                       onChange={handleInputChange}
@@ -889,7 +857,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                       size={isMobile ? "small" : "medium"}
                     />
                     <TextField
-                      label="CVV"
+                      label={translations?.personal_details.cvv || "Loading..."}
                       name="cardCvc"
                       value={formData.cardCvc}
                       onChange={handleInputChange}
@@ -914,11 +882,11 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                       gutterBottom
                       style={{ color: "white" }}
                     >
-                      Confirm Order
+                      {translations?.confirm_order || "Loading..."}
                     </Typography>
                     <Paper sx={{ p: { xs: 2, sm: 3 } }}>
                       <Typography variant="subtitle1" gutterBottom>
-                        Delivery Address:
+                        {translations?.Delivery_Address || "Loading..."}
                       </Typography>
                       <Typography color="text.secondary" paragraph>
                         {formData.name}
@@ -930,11 +898,11 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                         Phone: {formData.phone}
                       </Typography>
                       <Typography variant="subtitle1" gutterBottom>
-                        Payment Method:
+                        {translations?.payment_method || "Loading..."}
                       </Typography>
                       <Typography color="text.secondary">
                         {formData.paymentMethod === "cod"
-                          ? "Cash on Delivery"
+                          ? `${translations?.cash_on_delivery}`
                           : `${formData.cardType} Card`}
                       </Typography>
                     </Paper>
@@ -976,10 +944,10 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                       gutterBottom
                       style={{ color: "white" }}
                     >
-                      Order Confirmed!
+                      {translations?.order_confirmed || "Loading..."}!
                     </Typography>
                     <Typography color="text.secondary" paragraph>
-                      Thank you for your purchase
+                      {translations?.thank_you_purchase || "Loading..."}
                     </Typography>
                     <Paper
                       sx={{
@@ -990,7 +958,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                       }}
                     >
                       <Typography variant="h6" gutterBottom>
-                        Order Summary
+                       {translations?.order_summary || "Loading..."}
                       </Typography>
 
                       <TableContainer
@@ -1001,13 +969,13 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                           <TableHead>
                             <TableRow>
                               <TableCell>
-                                <strong>Product</strong>
+                                <strong>{translations?.order_product || "Loading.."}</strong>
                               </TableCell>
                               <TableCell align="center">
-                                <strong>Quantity</strong>
+                                <strong>{translations?.order_quantity || "Loading.."}</strong>
                               </TableCell>
                               <TableCell align="right">
-                                <strong>Price</strong>
+                                <strong>{translations?.order_price || "Loading.."}</strong>
                               </TableCell>
                             </TableRow>
                           </TableHead>
@@ -1038,7 +1006,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                         }}
                       >
                         <Typography variant="subtitle1">
-                          <strong>Total</strong>
+                          <strong>{translations?.cart_modal?.total || "Loading..."}</strong>
                         </Typography>
                         <Typography variant="subtitle1" color="primary">
                           <strong>₹{totalPrice}</strong>
@@ -1065,7 +1033,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                     onClick={handleBack}
                     fullWidth={isMobile}
                   >
-                    Back
+                    {translations?.btn_back || "Loading..."}
                   </Button>
                 )}
               {step === 1 && (
@@ -1074,7 +1042,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                   onClick={onClose}
                   fullWidth={isMobile}
                 >
-                  Cancel
+                  {translations?.btn_cancel || "Loading..."}
                 </Button>
               )}
               {step < (formData.paymentMethod === "card" ? 5 : 3) && (
@@ -1091,7 +1059,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                     },
                   }}
                 >
-                  Next
+                  {translations?.btn_next || "Loading..."}
                 </Button>
               )}
               {((step === 3 && formData.paymentMethod === "cod") ||
@@ -1113,7 +1081,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                     {loading ? (
                       <CircularProgress size={24} color="inherit" />
                     ) : (
-                      "Place Order"
+                     <span>{translations?.btn_place_order}</span>
                     )}
                   </Button>
                 )}
@@ -1135,7 +1103,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                       },
                     }}
                   >
-                    Close
+                    {translations?.btn_close || "Loading..."}
                   </Button>
                 )}
             </Box>

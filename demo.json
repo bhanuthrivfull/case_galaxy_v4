@@ -133,17 +133,35 @@
             "state_name":"State",
             "state_err_msg":{"field":"state","required_err":"is required","err_msg":"Enter a valid state"},
             "zip":"Zip Code",
-            "zip_err_msg":{"field":"zip","required_err":"is required","err_msg":"ZIP code must be 6 digits"}
-        },
-        "card_details":{
-            "title":"Card Details",
+            "zipCode_err_msg":{"field":"zipCode","required_err":"is required","err_msg":"ZIP code must be 6 digits"},
             "card_number":"Card Number",
-            "card_err_msg":{"field":"card","required_err":"is required","err_msg":"Card number must be 16 digits"},
+            "cardNumber_err_msg":{"field":"cardNumber","required_err":"is required","err_msg":"Card number must be 16 digits"},
             "expiry":"Expiry Date",
-            "expriy_err_msg":{"field":"card","required_err":"expiry is required","err_msg":"Invalid expiry date (MM/YY)"},
+            "cardExpiry_err_msg":{"field":"cardExpiry","required_err":"expiry is required","err_msg":"Invalid expiry date (MM/YY)"},
             "cvv":"CVV",
-            "cvv_err_msg":{"field":"card","required_err":"cvv is required","err_msg":"CVV must be 3 digits"}
-        }
+            "cardCvc_err_msg":{"field":"cardCvc","required_err":"cvv is required","err_msg":"CVV must be 3 digits"}
+        },
+        "payment_method":"Payment Method",
+        "select_card_type":"Select Card Type",
+        "card_details":"Card Details",
+        "confirm_order":"Confirm Order",
+        "thank_you_purchase":"Thank you for your purchase",
+        "order_summary":"Order Summary",
+        "order_product":"Product",
+        "order_quantity":"Quantity",
+        "order_price":"Price",
+        "btn_cancel":"Cancel",
+        "btn_next":"Next",
+        "btn_back":"Back",
+        "btn_place_order":"Place Order",
+        "btn_close":"Close",
+        "cash_on_delivery": "Cash On Delivery",
+        "Pay_when_you_receive": "Pay when you receive",
+        "Credit_Debit_Card": "Credit/Debit Card",
+        "Secure_online_payment":"Secure online Payment",
+        "Delivery_Address": "Delivery Address",
+        "order_confirmed":"Order Confirmed"
+       
       }
     },
     {
@@ -269,68 +287,85 @@
             "title": "个人信息",
             "full_name": "全名",
             "name_err_msg": {
-              "field": "name",
+              "field": "姓名",
               "required_err": "是必填项",
               "err_msg": "姓名只能包含字母和空格（2-50个字符）"
             },
             "email": "电子邮件",
             "email_err_msg": {
-              "field": "email",
+              "field": "电子邮件",
               "required_err": "是必填项",
               "err_msg": "请输入有效的电子邮件地址"
             },
             "phone": "电话",
             "phone_err_msg": {
-              "field": "phone",
+              "field": "电话",
               "required_err": "是必填项",
               "err_msg": "电话号码必须是10位数字，并以6、7、8或9开头"
             },
             "address": "地址",
             "address_err_msg": {
-              "field": "address",
+              "field": "地址",
               "required_err": "是必填项",
               "err_msg": "地址是必填项（至少10个字符）"
             },
             "city_name": "城市",
             "city_err_msg": {
-              "field": "city",
+              "field": "城市",
               "required_err": "是必填项",
               "err_msg": "请输入有效的城市名称"
             },
             "state_name": "省份",
             "state_err_msg": {
-              "field": "state",
+              "field": "省份",
               "required_err": "是必填项",
               "err_msg": "请输入有效的省份名称"
             },
             "zip": "邮政编码",
-            "zip_err_msg": {
-              "field": "zip",
+            "zipCode_err_msg": {
+              "field": "邮政编码",
               "required_err": "是必填项",
               "err_msg": "邮政编码必须是6位数字"
-            }
-          },
-          "card_details": {
-            "title": "银行卡信息",
+            },
             "card_number": "银行卡号",
-            "card_err_msg": {
-              "field": "card",
+            "cardNumber_err_msg": {
+              "field": "银行卡",
               "required_err": "是必填项",
               "err_msg": "银行卡号必须是16位数字"
             },
             "expiry": "有效期",
-            "expriy_err_msg": {
-              "field": "card",
+            "cardExpiry_err_msg": {
+              "field": "有效期",
               "required_err": "有效期是必填项",
               "err_msg": "无效的有效期（MM/YY）"
             },
-            "cvv": "CVV",
-            "cvv_err_msg": {
-              "field": "card",
+            "cvv": "西维维",
+            "cardCvc_err_msg": {
+              "field": "西维维",
               "required_err": "CVV是必填项",
               "err_msg": "CVV必须是3位数字"
             }
-          }
+        },
+        "payment_method": "支付方式",
+        "select_card_type": "选择卡类型",
+        "card_details": "银行卡信息",
+        "confirm_order": "确认订单",
+        "thank_you_purchase": "感谢您的购买",
+        "order_summary": "订单摘要",
+        "order_product": "产品",
+        "order_quantity": "数量",
+        "order_price": "价格",
+        "btn_cancel": "取消",
+        "btn_next": "下一步",
+        "btn_back": "返回",
+        "btn_place_order": "下订单",
+        "btn_close": "关闭",
+        "cash_on_delivery": "货到付款",
+        "Pay_when_you_receive": "收到货时付款",
+        "Credit_Debit_Card": "信用卡/借记卡",
+        "Secure_online_payment": "安全在线支付",
+        "Delivery_Address": "送货地址",
+        "order_confirmed": "订单已确认"
       }
     }
   ]
