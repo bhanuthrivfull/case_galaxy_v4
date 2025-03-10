@@ -160,8 +160,8 @@
         "Credit_Debit_Card": "Credit/Debit Card",
         "Secure_online_payment":"Secure online Payment",
         "Delivery_Address": "Delivery Address",
-        "order_confirmed":"Order Confirmed"
-       
+        "order_confirmed":"Order Confirmed",
+        "cards_data":["Visa", "MasterCard", "American Express", "Discover"]
       }
     },
     {
@@ -365,7 +365,8 @@
         "Credit_Debit_Card": "信用卡/借记卡",
         "Secure_online_payment": "安全在线支付",
         "Delivery_Address": "送货地址",
-        "order_confirmed": "订单已确认"
+        "order_confirmed": "订单已确认",
+        "cards_data": ["维萨", "万事达", "美国运通", "发现卡"]
       }
     }
   ]

@@ -115,6 +115,7 @@ const fadeInUp = {
 
 export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
   const { translations } = useLanguage();
+  console.log(JSON.stringify(translations.cards_data))
   const [step, setStep] = useState(1)
   const [direction, setDirection] = useState(0)
   const [formData, setFormData] = useState({
@@ -401,7 +402,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
         </Typography>
         <FormControl component="fieldset" error={!!errors.cardType}>
           <RadioGroup name="cardType" value={formData.cardType} onChange={handleInputChange}>
-            {["Visa", "MasterCard", "American Express", "Discover"].map((type) => (
+            {translations?.cards_data.map((type) => (
               <motion.div key={type} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Paper
                   sx={{
