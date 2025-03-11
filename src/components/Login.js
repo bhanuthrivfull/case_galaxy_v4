@@ -20,19 +20,24 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import AuthLayout from "./AuthLayout";
 import { motion } from "framer-motion";
+import { useLanguage } from "../contexts/LanguageContext";
 
-const schema = yup.object().shape({
-  email: yup
-    .string()
-    .email("Please enter a valid email address")
-    .required("Email is required"),
-  password: yup
-    .string()
-    .required("Password is required")
-    .min(8, "Password must be at least 8 characters"),
-});
+
 
 const Login = () => {
+  const { translations } = useLanguage();
+  console.log(translations?.login?.email_err_msg?.required)
+  const schema = yup.object().shape({
+    email: yup
+      .string()
+      .email(translations?.login?.email_err_msg?.err_msg)
+      .required(translations?.login?.email_err_msg?.required),
+    password: yup
+      .string()
+      .required(translations?.login?.psw_err_msg?.required)
+      .min(8, translations?.login?.psw_err_msg?.err_msg),
+  });
+
   const {
     control,
     handleSubmit,
@@ -98,11 +103,12 @@ const Login = () => {
     },
   };
 
+
   return (
     <AuthLayout>
       <motion.div initial="hidden" animate="visible" variants={formAnimation}>
-        <Typography component="h1" variant="h4" gutterBottom align="center"  style={{fontStyle:"italic", fontWeight:"bold"}}>
-          Log In
+        <Typography component="h1" variant="h4" gutterBottom align="center" style={{ fontStyle: "italic", fontWeight: "bold" }}>
+          {translations?.login?.title || "Loading..."}
         </Typography>
 
         {error && (
@@ -110,7 +116,6 @@ const Login = () => {
             {error}
           </Alert>
         )}
-
         <Box
           component="form"
           onSubmit={handleSubmit(onSubmit)}
@@ -120,7 +125,7 @@ const Login = () => {
             width: "100%",
             maxWidth: "400px",
             mx: "auto",
-            
+
           }}
         >
           <Controller
@@ -134,7 +139,7 @@ const Login = () => {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label={translations?.login?.email_label || "Loading..."}
                 autoComplete="email"
                 autoFocus
                 error={!!errors.email}
@@ -161,7 +166,7 @@ const Login = () => {
                 margin="normal"
                 required
                 fullWidth
-                label="Password"
+                label={translations?.login?.psw_label || "Loading..."}
                 type={showPassword ? "text" : "password"}
                 id="password"
                 autoComplete="current-password"
@@ -210,7 +215,7 @@ const Login = () => {
             }}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Logging in..." : "Log In"}
+            {isSubmitting ? translations?.login?.login_load : translations?.login?.title}
           </Button>
 
           <Box
@@ -222,17 +227,17 @@ const Login = () => {
               mt: 2,
             }}
           >
-          <Link
-      href="/forgot-password"
-      variant="body2"
-      sx={{ mb: isMobile ? 1 : 0, color: "blue" }}
-      onClick={(e) => {
-        e.preventDefault();
-        navigate("/forgotpassword");
-      }}
-    >
-      Forgot password?
-    </Link>
+            <Link
+              href="/forgot-password"
+              variant="body2"
+              sx={{ mb: isMobile ? 1 : 0, color: "blue" }}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/forgotpassword");
+              }}
+            >
+              {translations?.login?.forgot_psw || "Loading..."}
+            </Link>
             <Link
               href="/signup"
               variant="body2"
@@ -241,7 +246,7 @@ const Login = () => {
                 navigate("/signup");
               }}
             >
-              Don't have an account? Sign Up
+              {translations?.login?.dont_have_account || "Loading..."}
             </Link>
           </Box>
         </Box>

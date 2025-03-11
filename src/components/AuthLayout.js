@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Container, Paper } from '@mui/material';
+import LanguageSelector from './LanguageSelector';
 
 const AuthLayout = ({ children }) => {
   const newLocal = "";
@@ -16,6 +17,13 @@ const AuthLayout = ({ children }) => {
         padding: { xs: 2, sm: 4, md: 6 },
       }}
     >
+      <Box className='d-flex position-absolute ' sx={{ top: '20px', right: '20px' }}>
+        <div className='d-flex flex-column'>
+          {/* <h6 className='text-white'>Change Language</h6> */}
+          <LanguageSelector />
+        </div>
+      </Box>
+
       <Container maxWidth="sm">
         <Paper
           elevation={6}

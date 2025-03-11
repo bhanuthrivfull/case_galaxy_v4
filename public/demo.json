@@ -164,11 +164,12 @@
         "cards_data":["Visa", "MasterCard", "American Express", "Discover"],
         "login":{
           "title":"Log In",
+          "login_load":"Logging in...",
           "forgot_psw":"Forgot password?",
           "dont_have_account":"Don't have an account? Sign Up",
           "email_label":"Email Address",
           "email_err_msg":{"required":"Email is required","err_msg":"Please enter a valid email address"},
-          "psw_label":"Email Address",
+          "psw_label":"Password",
           "psw_err_msg":{"required":"Password is required","err_msg":"Password must be at least 8 characters"}
         }
       }
@@ -375,7 +376,17 @@
         "Secure_online_payment": "安全在线支付",
         "Delivery_Address": "送货地址",
         "order_confirmed": "订单已确认",
-        "cards_data": ["维萨", "万事达", "美国运通", "发现卡"]
+        "cards_data": ["维萨", "万事达", "美国运通", "发现卡"],
+        "login":{
+          "title":"登录",
+          "login_load":"登录中",
+          "forgot_psw":"忘记密码？",
+          "dont_have_account":"没有账户？注册",
+          "email_label":"电子邮件地址",
+          "email_err_msg":{"required":"电子邮件是必填项","err_msg":"请输入有效的电子邮件地址"},
+          "psw_label":"密码",
+          "psw_err_msg":{"required":"密码是必填项","err_msg":"密码必须至少8个字符"}
+        }
       }
     }
   ]
