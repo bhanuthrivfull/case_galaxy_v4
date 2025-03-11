@@ -108,7 +108,7 @@ const Signup = () => {
 
       // Redirect after a short delay to show success message
       setTimeout(() => {
-        navigate("/");
+        navigate("/login");
       }, 1500);
     } catch (err) {
       setError(err.message || "An error occurred during signup");

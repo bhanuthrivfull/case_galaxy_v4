@@ -161,7 +161,16 @@
         "Secure_online_payment":"Secure online Payment",
         "Delivery_Address": "Delivery Address",
         "order_confirmed":"Order Confirmed",
-        "cards_data":["Visa", "MasterCard", "American Express", "Discover"]
+        "cards_data":["Visa", "MasterCard", "American Express", "Discover"],
+        "login":{
+          "title":"Log In",
+          "forgot_psw":"Forgot password?",
+          "dont_have_account":"Don't have an account? Sign Up",
+          "email_label":"Email Address",
+          "email_err_msg":{"required":"Email is required","err_msg":"Please enter a valid email address"},
+          "psw_label":"Email Address",
+          "psw_err_msg":{"required":"Password is required","err_msg":"Password must be at least 8 characters"}
+        }
       }
     },
     {

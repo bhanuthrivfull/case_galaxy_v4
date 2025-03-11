@@ -69,7 +69,8 @@ const Login = () => {
         // navigate("/admin");
         navigate("/admin", { replace: true });
       } else {
-        navigate("/", { replace: true });
+        // navigate("/", { replace: true });
+        window.location.replace("/");
       }
     } catch (err) {
       setGlobalError(err.message || "Login failed. Please try again.");
