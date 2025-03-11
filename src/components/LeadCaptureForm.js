@@ -105,16 +105,30 @@ const LeadCaptureForm = () => {
   };
 
   // Error messages
+  // const errorMessages = {
+  //   name: {
+  //     required: translations?.lead_capture?.errName?.required || "Name is required",
+  //     pattern: translations?.lead_capture?.errName?.pattern || "Name must start with a capital letter, contain only letters (no numbers or special characters), and allow only a single space between words."
+  //   },
+  //   phone: {
+  //     required: translations?.lead_capture?.errPhone?.required || "Phone number is required",
+  //     pattern: translations?.lead_capture?.errPhone?.pattern || "Phone number must start with a digit between 6 and 9, contain exactly 10 digits, and not have 9 consecutive identical digits."
+  //   },
+  // };
+
   const errorMessages = {
     name: {
-      required: translations?.lead_capture?.errName?.required || "Name is required",
-      pattern: translations?.lead_capture?.errName?.pattern || "Name must start with a capital letter, contain only letters (no numbers or special characters), and allow only a single space between words."
+      required: translations?.lead_capture?.name_err_msg?.required || "Name is required",
+      pattern: translations?.lead_capture?.name_err_msg?.pattern || 
+               "Name must start with a capital letter, contain only letters (no numbers or special characters), and allow only a single space between words."
     },
     phone: {
-      required: translations?.lead_capture?.errPhone?.required || "Phone number is required",
-      pattern: translations?.lead_capture?.errPhone?.pattern || "Phone number must start with a digit between 6 and 9, contain exactly 10 digits, and not have 9 consecutive identical digits."
-    },
+      required: translations?.lead_capture?.number_err_msg?.required || "Phone number is required",
+      pattern: translations?.lead_capture?.number_err_msg?.pattern || 
+               "Phone number must start with a digit between 6 and 9, contain exactly 10 digits, and not have 9 consecutive identical digits."
+    }
   };
+  
 
   const validateField = (name, value) => {
     if (!value) return errorMessages[name].required;
