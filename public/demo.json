@@ -89,8 +89,16 @@
         "alert": "Congratulations! You got a 15% flat discount.",
         "btn_title": "Submit",
         "name_label": "Full Name",
-        "number_label": "Phone Number"
-      },
+        "number_label": "Phone Number",
+        "name_err_msg": {
+          "required": "Name is required",
+          "pattern": "Name must start with a capital letter, contain only letters (no numbers or special characters), and allow only a single space between words."
+        },
+        "number_err_msg": {
+          "required": "Phone number is required",
+          "pattern": "Phone number must start with a digit between 6 and 9, contain exactly 10 digits, and not have 9 consecutive identical digits."
+        }
+        },
       "benefits_data": {
         "title": "Exceptional Features",
         "benefits": [
@@ -371,8 +379,16 @@
         "alert": "恭喜！您获得15%折扣。",
         "btn_title": "提交",
         "name_label": "全名",
-        "number_label": "电话号码"
-      },
+        "number_label": "电话号码",
+        "name_err_msg": {
+          "required": "姓名是必填的",
+          "pattern": "姓名必须以大写字母开头，只包含字母（无数字或特殊字符），单词之间仅允许一个空格。"
+        },
+        "number_err_msg": {
+          "required": "电话号码是必填的",
+          "pattern": "电话号码必须以 6 到 9 之间的数字开头，必须包含 10 位数字，并且不能有 9 个连续相同的数字。"
+        }
+        },
       "benefits_data": {
         "title": "卓越功能",
         "benefits": [

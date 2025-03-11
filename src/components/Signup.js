@@ -27,48 +27,50 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import AuthLayout from "./AuthLayout";
 import { motion, AnimatePresence } from "framer-motion";
-
-const schema = yup.object().shape({
-  name: yup
-    .string()
-    .required("Name is required")
-    .min(2, "Name must be at least 2 characters")
-    .matches(/^[a-zA-Z\s]*$/, "Name can only contain letters and spaces"),
-  email: yup
-    .string()
-    .email("Please enter a valid email address")
-    .required("Email is required")
-    .test("is-valid-domain", "Please use a valid email domain", (value) => {
-      if (!value) return false;
-      const domain = value.split("@")[1];
-      if (!domain) return false;
-
-      const domainParts = domain.split(".");
-      if (domainParts.length < 2) return false;
-
-      const topLevelDomain = domainParts[domainParts.length - 1];
-      return (
-        !domain.startsWith("example.") &&
-        !domain.endsWith(".test") &&
-        /^[a-zA-Z.-]+$/.test(domain) &&
-        topLevelDomain.length >= 2
-      );
-    }),
-  password: yup
-    .string()
-    .required("Password is required")
-    .min(8, "Password must be at least 8 characters")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
-    ),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match")
-    .required("Confirm Password is required"),
-});
+import { useLanguage } from "../contexts/LanguageContext";
 
 const Signup = () => {
+  const { translations } = useLanguage();
+
+  const schema = yup.object().shape({
+    name: yup
+      .string()
+      .required(translations?.sign_up?.err_msg_name_req)
+      .min(2, translations?.sign_up?.err_msg_two_char)
+      .matches(/^[a-zA-Z\s]*$/, translations?.sign_up?.err_contain_letters),
+    email: yup
+      .string()
+      .email(translations?.sign_up?.err_valid_email)
+      .required(translations?.sign_up?.err_email_required)
+      .test("is-valid-domain",translations?.sign_up?.err_valid_domain, (value) => {
+        if (!value) return false;
+        const domain = value.split("@")[1];
+        if (!domain) return false;
+
+        const domainParts = domain.split(".");
+        if (domainParts.length < 2) return false;
+
+        const topLevelDomain = domainParts[domainParts.length - 1];
+        return (
+          !domain.startsWith("example.") &&
+          !domain.endsWith(".test") &&
+          /^[a-zA-Z.-]+$/.test(domain) &&
+          topLevelDomain.length >= 2
+        );
+      }),
+    password: yup
+      .string()
+      .required(translations?.sign_up?.err_psw_required)
+      .min(8, translations?.sign_up?.err_psw_char)
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, translations?.sign_up?.err_psw_contain
+      ),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password"), null],  translations?.sign_up?.err_psw_match)
+      .required(translations?.sign_up?.confirm_psw),
+  });
+
   const {
     control,
     handleSubmit,
@@ -148,7 +150,7 @@ const Signup = () => {
           align="center"
           style={{ fontStyle: "italic", fontWeight: "bold" }}
         >
-          Create Account
+          {translations?.sign_up?.title || "Loading..."}
         </Typography>
 
         <AnimatePresence>
@@ -163,7 +165,7 @@ const Signup = () => {
           {success && (
             <motion.div {...alertAnimation}>
               <Alert severity="success" sx={{ mb: 2 }}>
-                Account created successfully! Redirecting...
+                {translations?.sign_up?.account_created || "Loading..."}
               </Alert>
             </motion.div>
           )}
@@ -189,7 +191,7 @@ const Signup = () => {
                 required
                 fullWidth
                 id="name"
-                label="Full Name"
+                label={translations?.sign_up?.full_name_label || "Loading"}
                 autoComplete="name"
                 autoFocus
                 error={!!errors.name}
@@ -216,7 +218,7 @@ const Signup = () => {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label={translations?.sign_up?.email_address_label || "Loading"}
                 autoComplete="email"
                 error={!!errors.email}
                 helperText={errors.email?.message}
@@ -241,7 +243,7 @@ const Signup = () => {
                 {...field}
                 required
                 fullWidth
-                label="Password"
+                label={translations?.sign_up?.psw_label || "Loading"}
                 type={showPassword ? "text" : "password"}
                 id="password"
                 autoComplete="new-password"
@@ -280,7 +282,7 @@ const Signup = () => {
                 {...field}
                 required
                 fullWidth
-                label="Confirm Password"
+                label={translations?.sign_up?.confirm_psw_label || "Loading"}
                 type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
                 error={!!errors.confirmPassword}
@@ -338,7 +340,7 @@ const Signup = () => {
             {isLoading ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
-              "Create Account"
+             <span>{translations?.sign_up?.title || "Loading"}</span>
             )}
           </Button>
 
@@ -353,7 +355,7 @@ const Signup = () => {
             }}
           >
             <Typography variant="body2" color="text.secondary">
-              Already have an account?
+              {translations?.sign_up?.already_have_account || "Loading"}
             </Typography>
             <Link
               href="/login"
@@ -365,7 +367,7 @@ const Signup = () => {
                 },
               }}
             >
-              Log in here
+              {translations?.sign_up?.login_here || "Loading"}
             </Link>
           </Box>
         </Box>
