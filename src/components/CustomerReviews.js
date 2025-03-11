@@ -8,7 +8,7 @@ const reviews = [
   {
     id: 1,
     name: "Raju",
-    rating: 5,
+    rating: 3,
     comment: "Very durable and looks super sleek. Totally worth it.",
     avatar: "https://media.gettyimages.com/id/175990379/video/portrait-of-a-horrible-boss.jpg?s=640x640&k=20&c=rrcEN7JwxCS3NEPBD6eHN-R_I7zUv98CL-lpMCzaDGA=",
   },

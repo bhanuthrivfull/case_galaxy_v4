@@ -22,7 +22,7 @@ const API_BASE_URL =
   process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
 function ProductShowcase({ category }) {
-  const {translations} = useLanguage();
+  const { translations } = useLanguage();
 
   const navigate = useNavigate();
   const theme = useTheme();
@@ -110,9 +110,9 @@ function ProductShowcase({ category }) {
   };
 
   const getGridSize = () => {
-    if (isMobile) return 6;
-    if (isTablet) return 4;
-    return 3;
+    if (isMobile) return 12;
+    if (isTablet) return 6;
+    return 4;
   };
 
   if (loading) {
@@ -150,7 +150,6 @@ function ProductShowcase({ category }) {
         maxWidth: "100%", 
         margin: "0 auto",
         backgroundImage: 'linear-gradient(45deg,rgb(255, 255, 255),rgb(255, 255, 255))',
-        // borderRadius: 2,
         boxShadow: 3,
       }}
     >
@@ -170,7 +169,7 @@ function ProductShowcase({ category }) {
         sx={{ display: "flex", justifyContent: "center" }}
       >
         {products.map((product, index) => (
-          <Grid item xs={6} sm={4} md={getGridSize()} key={product._id}>
+          <Grid item xs={12} sm={6} md={getGridSize()} key={product._id}>
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -180,7 +179,7 @@ function ProductShowcase({ category }) {
               <Card
                 onClick={() => handleCardClick(product._id)}
                 sx={{
-                   backgroundImage: 'linear-gradient(45deg,rgb(255, 255, 255),rgb(255, 255, 255))',
+                  backgroundImage: 'linear-gradient(45deg,rgb(255, 255, 255),rgb(255, 255, 255))',
                   borderRadius: 3,
                   height: "100%",
                   display: "flex",
@@ -221,7 +220,6 @@ function ProductShowcase({ category }) {
                     boxShadow: 4,
                     borderRadius: "12px",
                     backgroundColor: 'rgb(114, 245, 248)',
-                    // height:"45vh",
                   }}
                 >
                   <Typography
@@ -235,29 +233,24 @@ function ProductShowcase({ category }) {
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       fontSize: { xs: "1rem", sm: "1.2rem" },
-           
                       "@media (max-width: 768px)": {
-                      fontSize: "0.5rem",
-                       lineHeight: "1.0rem",
-                     height: "8vh",
-                        }
-              
+                        fontSize: "0.5rem",
+                        lineHeight: "1.0rem",
+                        height: "8vh",
+                      }
                     }}
-                    
                   >
                     <span
                       style={{
                         fontSize: "1.3rem",
                         fontWeight: "500",
                         color: "#171616",
-                       backgroundImage: "linear-gradient(to right, rgb(22, 21, 21), rgb(12, 12, 12))",
+                        backgroundImage: "linear-gradient(to right, rgb(22, 21, 21), rgb(12, 12, 12))",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparentAdmin Panel",
                         padding: "0.2em 0.4em",
                         borderRadius: "4px",
                       }}
-
-                      
                     >
                       {product.model}
                     </span>
@@ -280,7 +273,7 @@ function ProductShowcase({ category }) {
                         fontSize: { xs: "1rem", sm: "1.2rem" },
                       }}
                     >
-                   ₹{parseFloat(product.price - product.discountPrice).toFixed(2)}
+                      ₹{parseFloat(product.price - product.discountPrice).toFixed(2)}
                     </Typography>
                     {product.discountPrice > 0 && (
                       <Typography
@@ -294,9 +287,7 @@ function ProductShowcase({ category }) {
                           fontSize: { xs: "1.2rem", sm: "1.3rem" },
                         }}
                       >
-                         ₹{product.price }
-
-                        {/* ₹{parseFloat(product.discountPrice).toFixed(2)} */}
+                        ₹{product.price}
                       </Typography>
                     )}
                     {product.discountPrice > 0 && (
@@ -314,7 +305,6 @@ function ProductShowcase({ category }) {
                       >
                         {translations?.save_title || "Loading..."} ₹
                         {parseFloat(product.discountPrice).toFixed(2)}
-
                       </Typography>
                     )}
                   </Box>
@@ -324,7 +314,6 @@ function ProductShowcase({ category }) {
                     disabled={!product.inStock || loadingProducts[product._id]}
                     sx={{
                       mt: 2,
-                    
                       color: "black",
                       fontSize: { xs: "0.5rem", sm: "1rem" },
                       py: { xs: 1, sm: 1.5 },
@@ -336,7 +325,7 @@ function ProductShowcase({ category }) {
                       },
                     }}
                   >
-                {loadingProducts[product._id] ? (
+                    {loadingProducts[product._id] ? (
                       <>
                         <CircularProgress
                           size={24}

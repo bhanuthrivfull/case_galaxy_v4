@@ -98,22 +98,21 @@ const LeadCaptureForm = () => {
     color: "#6200ea", // Purple text color for the title
   };
 
-
   // Validation patterns
   const patterns = {
-    name: /^[a-zA-Z\s]{2,50}$/,
-    phone: /^[6-9]\d{9}$/,
+    name: /^[A-Z][a-zA-Z]+(\s[a-zA-Z]+)*$/,
+    phone: /^(?!.*(\d)\1{8})[6-9]\d{9}$/,
   };
 
   // Error messages
   const errorMessages = {
     name: {
-      required: translations?.lead_capture?.errName?.required,
-      pattern: translations?.lead_capture?.errName?.pattern
+      required: translations?.lead_capture?.errName?.required || "Name is required",
+      pattern: translations?.lead_capture?.errName?.pattern || "Name must start with a capital letter, contain only letters (no numbers or special characters), and allow only a single space between words."
     },
     phone: {
-      required: translations?.lead_capture?.errPhone?.required,
-      pattern: translations?.lead_capture?.errPhone?.pattern
+      required: translations?.lead_capture?.errPhone?.required || "Phone number is required",
+      pattern: translations?.lead_capture?.errPhone?.pattern || "Phone number must start with a digit between 6 and 9, contain exactly 10 digits, and not have 9 consecutive identical digits."
     },
   };
 
@@ -151,24 +150,29 @@ const LeadCaptureForm = () => {
       if (error) newErrors[field] = error;
     });
 
+    // Set errors and touched fields
     setErrors(newErrors);
     setTouched({ name: true, phone: true });
 
-    if (Object.keys(newErrors).length === 0) {
-      setIsSubmitting(true);
+    // Check if there are errors
+    if (Object.keys(newErrors).length > 0) {
+      return; // Stop form submission if there are errors
+    }
 
-      // Simulate API call
-      try {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-        setSubmitted(true);
-      } catch (error) {
-        setErrors((prev) => ({
-          ...prev,
-          submit: "Something went wrong. Please try again.",
-        }));
-      } finally {
-        setIsSubmitting(false);
-      }
+    // Proceed with form submission if no errors
+    setIsSubmitting(true);
+
+    try {
+      // Simulate an API call
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      setSubmitted(true);
+    } catch (error) {
+      setErrors((prev) => ({
+        ...prev,
+        submit: "Something went wrong. Please try again.",
+      }));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -186,28 +190,27 @@ const LeadCaptureForm = () => {
     padding: "2.5rem",
     maxWidth: "480px",
     width: "100%",
-    border:"1.5px solid #333",
+    border: "1.5px solid #333",
     borderRadius: "20px",
-    backgroundColor: "rgb(234, 112, 253))",
+    backgroundColor: "rgb(253, 253, 253)",
     boxShadow: "0 10px 20px rgba(0, 0, 0, 0.1)", // Light shadow for the card
   };
-
 
   return (
     <ThemeProvider theme={newTheme}>
       <Container maxWidth={false} disableGutters sx={containerStyles}>
         <Paper elevation={8} sx={paperStyles}>
           <Typography variant="h1" sx={titleStyles}>
-           {translations?.lead_capture?.title || "Loading"}
+            {translations?.lead_capture?.title || "Loading"}
           </Typography>
           <AnimatePresence>
             {submitted ? (
-             <Alert severity="success">{translations?.lead_capture?.alert || "Loading"} </Alert>
+              <Alert severity="success">{translations?.lead_capture?.alert || "Congratulations! You got a 15% flat discount."}</Alert>
             ) : (
               <form onSubmit={handleSubmit}>
                 <Box display="flex" flexDirection="column" gap="1.5rem">
                   <TextField
-                    label={translations?.lead_capture?.name_label || "Loading"}
+                    label={translations?.lead_capture?.name_label || "Full Name"}
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
@@ -217,7 +220,7 @@ const LeadCaptureForm = () => {
                     fullWidth
                   />
                   <TextField
-                    label={translations?.lead_capture?.number_label || "Loading"}
+                    label={translations?.lead_capture?.number_label || "Phone Number"}
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
@@ -245,7 +248,7 @@ const LeadCaptureForm = () => {
                     {isSubmitting ? (
                       <CircularProgress size={24} />
                     ) : (
-                      <span>{translations?.lead_capture?.btn_title || "Loading"}</span>
+                      <span>{translations?.lead_capture?.btn_title || "Submit"}</span>
                     )}
                   </Button>
                 </Box>

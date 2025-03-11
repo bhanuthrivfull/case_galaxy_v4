@@ -49,6 +49,7 @@ function StatisticalEvidence() {
                   sx={{
                     p: 4,
                     mx: 5,
+                    height:'200px',
                     textAlign: "center",
                     borderRadius: "12px",
                     bgcolor: index % 2 === 0 ? "rgb(210, 12, 232) " : "rgb(28, 160, 114) ", // Alternate colors for stat cards

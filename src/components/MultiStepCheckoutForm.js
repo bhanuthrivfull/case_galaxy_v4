@@ -261,33 +261,120 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
     setStep((prev) => prev - 1)
   }
 
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target
+  //   let formattedValue = value
+
+  //   // Format specific fields
+  //   switch (name) {
+  //     case "cardNumber":
+  //       formattedValue = value
+  //         .replace(/\s/g, "")
+  //         .replace(/(\d{4})/g, "$1 ")
+  //         .trim()
+  //       break
+  //     case "cardExpiry":
+  //       formattedValue = value
+  //         .replace(/\D/g, "")
+  //         .replace(/(\d{2})(\d)/, "$1/$2")
+  //         .slice(0, 5)
+  //       break
+  //     case "phone":
+  //       formattedValue = value.replace(/\D/g, "").slice(0, 10)
+  //       break
+  //     case "zipCode":
+  //       formattedValue = value.replace(/\D/g, "").slice(0, 6)
+  //       break
+  //     default:
+  //       break
+  //   }
+
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [name]: formattedValue,
+  //   }))
+
+  //   if (touched[name]) {
+  //     const error = validateField(name, formattedValue)
+  //     setErrors((prev) => ({ ...prev, [name]: error }))
+  //   }
+  // }
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
     let formattedValue = value
-
-    // Format specific fields
     switch (name) {
       case "cardNumber":
-        formattedValue = value
-          .replace(/\s/g, "")
-          .replace(/(\d{4})/g, "$1 ")
-          .trim()
-        break
+        formattedValue = value.replace(/\D/g, "");
+
+        if (formattedValue.length > 16) {
+          return;
+        }
+
+        formattedValue = formattedValue.replace(/(\d{4})/g, "$1 ").trim();
+        break;
       case "cardExpiry":
-        formattedValue = value
-          .replace(/\D/g, "")
-          .replace(/(\d{2})(\d)/, "$1/$2")
-          .slice(0, 5)
-        break
+        formattedValue = value.replace(/\D/g, "");
+      
+       
+        if (formattedValue.length >= 2) {
+          let month = formattedValue.slice(0, 2);
+          let year = formattedValue.slice(2, 4);
+      
+          
+          if (parseInt(month) > 12) {
+            month = "12";
+          } else if (parseInt(month) < 1) {
+            month = "01";
+          }
+      
+          
+          formattedValue = month + (year ? "/" + year : "");
+      
+          
+          if (year.length === 2) {
+            const currentYear = new Date().getFullYear() % 100;
+            if (parseInt(year) < currentYear) {
+              return; 
+            }
+          }
+        }
+      
+       
+        formattedValue = formattedValue.slice(0, 5);
+        break;
+        
       case "phone":
-        formattedValue = value.replace(/\D/g, "").slice(0, 10)
-        break
+        let onlyNumbers = value.replace(/\D/g, ""); 
+        if (onlyNumbers.length > 0 && !/^[6789]/.test(onlyNumbers)) {
+          return;
+        }
+        formattedValue = onlyNumbers.slice(0, 10); 
+        break;
+      
       case "zipCode":
         formattedValue = value.replace(/\D/g, "").slice(0, 6)
         break
+      case "name":
+        formattedValue = value
+          .replace(/[^a-zA-Z\s]/g, "") 
+          .replace(/\b\w/g, (char) => char.toUpperCase()); 
+        break;
+        case "email":
+          formattedValue = value
+          .replace(/[,#'"!$%^&*()<>?/|}{[\]`~=+]/g, "")
+          .replace(/\s/g, "")
+          .replace(/@{2,}/g, "@") 
+          .replace(/\.{2,}/g, ".") 
+        
+          break;
+       
+          
+        
+        
       default:
-        break
-    }
+        break   
+    };
 
     setFormData((prev) => ({
       ...prev,

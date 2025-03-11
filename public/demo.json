@@ -65,21 +65,21 @@
           {
             "id": 1,
             "name": "Raju",
-            "rating": 5,
+            "rating": 3,
             "comment": "Very durable and looks super sleek. Totally worth it.",
             "avatar": "https://media.gettyimages.com/id/175990379/video/portrait-of-a-horrible-boss.jpg?s=640x640&k=20&c=rrcEN7JwxCS3NEPBD6eHN-R_I7zUv98CL-lpMCzaDGA="
           },
           {
             "id": 2,
             "name": "Ram",
-            "rating": 5,
+            "rating": 4,
             "comment": "Stylish and strong, it makes my phone look amazing!",
             "avatar": "https://media.istockphoto.com/id/849455442/photo/smiling-businessman-in-his-office.jpg?s=612x612&w=0&k=20&c=PcM0ei31yAmQLV_LjzQODC424QDcMeEDff9r-gmJyu0="
           },
           {
             "id": 3,
             "name": "Krishna",
-            "rating": 5,
+            "rating": 4,
             "comment": "Perfect fit and looks amazing! The case feels premium.",
             "avatar": "https://img.freepik.com/premium-photo/smiling-businessman-formal-wear-using-tablet-while-standing-rooftop_232070-1360.jpg"
           }
@@ -171,6 +171,24 @@
           "email_err_msg":{"required":"Email is required","err_msg":"Please enter a valid email address"},
           "psw_label":"Password",
           "psw_err_msg":{"required":"Password is required","err_msg":"Password must be at least 8 characters"}
+        },
+        "forgot_psw":{
+          "title":"Change Password",
+          "email_label":"Enter Registered Email",
+          "otp_label":"Enter OTP",
+          "psw_label":"New Password",
+          "send_otp":"Send OTP",
+          "verify_otp":"Verify OTP", 
+          "go_to_home":"Go to Home",
+          "already_sent_otp":"Already sent OTP (valid up to 5 min)",
+          "otp_sent":"OTP sent successfully!",
+          "otp_verifyed":"OTP verified successfully!",
+          "invalid_opt":"Invalid OTP",
+          "err_changing_psw":"Error changing password",
+          "psw_change":"Password changed successfully!"
+        },
+        "sign_up":{
+          "title":"Create Account"
         }
       }
     },
@@ -240,21 +258,21 @@
       {
         "id": 1,
         "name": "王伟",
-        "rating": 5,
+        "rating": 3,
         "comment": "非常耐用，看起来很时尚，完全值得购买。",
         "avatar": "https://media.gettyimages.com/id/175990379/video/portrait-of-a-horrible-boss.jpg?s=640x640&k=20&c=rrcEN7JwxCS3NEPBD6eHN-R_I7zUv98CL-lpMCzaDGA="
       },
       {
         "id": 2,
         "name": "李娜",
-        "rating": 5,
+        "rating": 4,
         "comment": "时尚又结实，让我的手机焕然一新！",
         "avatar": "https://media.istockphoto.com/id/849455442/photo/smiling-businessman-in-his-office.jpg?s=612x612&w=0&k=20&c=PcM0ei31yAmQLV_LjzQODC424QDcMeEDff9r-gmJyu0="
       },
       {
         "id": 3,
         "name": "张强",
-        "rating": 5,
+        "rating": 4,
         "comment": "完美贴合，看起来很棒！手感非常高级。",
         "avatar": "https://img.freepik.com/premium-photo/smiling-businessman-formal-wear-using-tablet-while-standing-rooftop_232070-1360.jpg"
       }
@@ -386,7 +404,23 @@
           "email_err_msg":{"required":"电子邮件是必填项","err_msg":"请输入有效的电子邮件地址"},
           "psw_label":"密码",
           "psw_err_msg":{"required":"密码是必填项","err_msg":"密码必须至少8个字符"}
-        }
+        },
+        "forgot_psw": {
+        "title": "更改密码",
+        "email_label": "输入注册邮箱",
+        "otp_label": "输入OTP",
+        "psw_label": "新密码",
+        "send_otp": "发送OTP",
+        "verify_otp": "验证OTP",
+        "go_to_home": "返回主页",
+        "already_sent_otp": "OTP已发送（有效期5分钟）",
+        "otp_sent": "OTP发送成功！",
+        "otp_verifyed": "OTP验证成功！",
+        "invalid_opt": "无效的OTP",
+        "err_changing_psw": "更改密码时出错",
+        "psw_change": "密码更改成功！"
+
+      }
       }
     }
   ]

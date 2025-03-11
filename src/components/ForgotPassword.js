@@ -12,8 +12,10 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff, ArrowBack } from "@mui/icons-material";
 import axios from "axios";
-
+import { useLanguage } from "../contexts/LanguageContext";
+import LanguageSelector from "./LanguageSelector";
 const ForgotPassword = () => {
+  const { translations } = useLanguage();
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -45,7 +47,7 @@ const ForgotPassword = () => {
 
     // Check if OTP is still valid (5 min)
     if (storedTimestamp && Date.now() - parseInt(storedTimestamp) < 5 * 60 * 1000) {
-      showSnackbar("Already sent OTP (valid up to 5 min)", "warning");
+      showSnackbar(translations?.forgot_psw?.already_sent_otp, "warning");
       return;
     }
 
@@ -53,7 +55,7 @@ const ForgotPassword = () => {
       const response = await axios.post("http://localhost:5000/api/auth/send-otp", { email });
       localStorage.setItem("resetOtp", response.data.otp);
       localStorage.setItem("otpTimestamp", Date.now().toString());
-      showSnackbar("OTP sent successfully!", "success");
+      showSnackbar(translations?.forgot_psw?.otp_sent, "success");
     } catch (error) {
       setErrors((prev) => ({ ...prev, email: error.response?.data?.error || "Error sending OTP" }));
     }
@@ -72,7 +74,7 @@ const ForgotPassword = () => {
     localStorage.removeItem("resetOtp");
     localStorage.removeItem("otpTimestamp");
     setOtpVerified(true);
-    showSnackbar("OTP verified successfully!", "success");
+    showSnackbar(translations?.forgot_psw?.otp_verifyed, "success");
   };
 
   const changePassword = async () => {
@@ -85,20 +87,26 @@ const ForgotPassword = () => {
       localStorage.removeItem("otpTimestamp");
       window.location.reload();
     } catch (error) {
-      setErrors((prev) => ({ ...prev, newPassword: "Error changing password" }));
+      setErrors((prev) => ({ ...prev, newPassword: translations?.forgot_psw?.err_changing_psw }));
     }
   };
 
   return (
-    <Container maxWidth="sm" 
-    sx={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      minHeight: "100vh",
-    }}
+    <Container maxWidth="sm"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+      }}
     >
+      <Box className='d-flex position-absolute ' sx={{ top: '20px', right: '20px' }}>
+        <div className='d-flex flex-column'>
+          {/* <h6 className='text-white'>Change Language</h6> */}
+          <LanguageSelector />
+        </div>
+      </Box>
       <Box
         sx={{
           backgroundColor: "rgba(196, 243, 255, 0.7)",
@@ -115,13 +123,13 @@ const ForgotPassword = () => {
             <ArrowBack />
           </IconButton>
           <Typography variant="h4" gutterBottom>
-            Change Password
+            {translations?.forgot_psw?.title || "Loading..."}
           </Typography>
         </Box>
 
         <TextField
           fullWidth
-          label="Enter Registered Email"
+          label={translations?.forgot_psw?.email_label}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           margin="normal"
@@ -129,35 +137,33 @@ const ForgotPassword = () => {
           error={!!errors.email}
           helperText={errors.email}
         />
-<Button
-  variant="outlined"
-  sx={{
-    color: "black",
-    border: "2px solid rgba(255, 255, 255, 0.5)",
-    backgroundColor: "transparent",
-    backdropFilter: "blur(10px)",
-    boxShadow: "0 4px 8px rgba(255, 255, 255, 0.2)",
-    mt: 1,
-    transition: "all 0.3s ease",
-    "&:hover": {
-      backgroundColor: "rgba(255, 255, 255, 0.2)",
-      borderColor: "rgba(0, 0, 0, 0.8)",
-      boxShadow: "0 6px 12px rgba(255, 255, 255, 0.4)",
-      transform: "translateY(-2px)"
-    },
-    "&:active": {
-      transform: "translateY(1px)"
-    }
-  }}
-  onClick={sendOtp}
->
-  Send OTP
-</Button>
-
-
+        <Button
+          variant="outlined"
+          sx={{
+            color: "black",
+            border: "2px solid rgba(255, 255, 255, 0.5)",
+            backgroundColor: "transparent",
+            backdropFilter: "blur(10px)",
+            boxShadow: "0 4px 8px rgba(255, 255, 255, 0.2)",
+            mt: 1,
+            transition: "all 0.3s ease",
+            "&:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.2)",
+              borderColor: "rgba(0, 0, 0, 0.8)",
+              boxShadow: "0 6px 12px rgba(255, 255, 255, 0.4)",
+              transform: "translateY(-2px)"
+            },
+            "&:active": {
+              transform: "translateY(1px)"
+            }
+          }}
+          onClick={sendOtp}
+        >
+          {translations?.forgot_psw?.send_otp || "Loading..."}
+        </Button>
         <TextField
           fullWidth
-          label="Enter OTP"
+          label={translations?.forgot_psw?.otp_label}
           value={otp}
           onChange={(e) => setOtp(e.target.value)}
           margin="normal"
@@ -170,14 +176,14 @@ const ForgotPassword = () => {
           sx={{ backgroundColor: "#28a745", color: "white", mt: 1, "&:hover": { backgroundColor: "#218838" } }}
           onClick={verifyOtp}
         >
-          Verify OTP
+          {translations?.forgot_psw?.verify_otp || "Loading..."}
         </Button>
 
         {otpVerified && (
           <>
             <TextField
               fullWidth
-              label="New Password"
+              label={translations?.forgot_psw?.psw_label}
               type={showPassword ? "text" : "password"}
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
@@ -201,7 +207,7 @@ const ForgotPassword = () => {
               onClick={changePassword}
               disabled={!newPassword}
             >
-              Change Password
+              {translations?.forgot_psw?.title || "Loading..."}
             </Button>
           </>
         )}
@@ -209,6 +215,8 @@ const ForgotPassword = () => {
           <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
             <Button variant="outlined" fullWidth onClick={() => (window.location.href = "/")}>
               Go to Home
+              {translations?.forgot_psw?.go_to_home || "Loading..."}
+
             </Button>
           </Box>
         )}
