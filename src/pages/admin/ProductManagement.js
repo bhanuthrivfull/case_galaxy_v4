@@ -31,9 +31,10 @@ import { useLanguage } from '../../contexts/LanguageContext';
 const API_BASE_URL = "http://localhost:5000/api";
 
 const ProductManagement = () => {
+  const {translations} = useLanguage() // new code
   const theme = useTheme();
   const { language } = useLanguage();
-
+  
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery(theme.breakpoints.down("md"));
   const [priceError, setPriceError] = useState(null);
@@ -150,7 +151,6 @@ const ProductManagement = () => {
   
 
   const handleSubmit = async (e) => {
-    console.log(`Traget Id=========>`,e.target.id)
     e.preventDefault();
     setLoading(true);
 

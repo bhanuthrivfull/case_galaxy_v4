@@ -13,8 +13,10 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const OrderHistory = ({ orders }) => {
+  const {translations} = useLanguage();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -40,18 +42,19 @@ const OrderHistory = ({ orders }) => {
       }}
     >
       <Typography variant="h6" gutterBottom sx={{ mb: 3 }}>
-        Order History
+        {/* Order History */}
+        {translations?.admin?.order_tab?.order_history || "Loading..."}
       </Typography>
       
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Order ID</TableCell>
-              {!isMobile && <TableCell>Customer</TableCell>}
-              <TableCell>Total</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Date</TableCell>
+              <TableCell>{translations?.admin?.order_tab?.order_id || "Loading..."}</TableCell>
+              {!isMobile && <TableCell>{translations?.admin?.order_tab?.customer || "Loading..."}</TableCell>}
+              <TableCell>{translations?.admin?.order_tab?.total || "Loading..."}</TableCell>
+              <TableCell>{translations?.admin?.order_tab?.status || "Loading..."}</TableCell>
+              <TableCell>{translations?.admin?.order_tab?.date || "Loading..."}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

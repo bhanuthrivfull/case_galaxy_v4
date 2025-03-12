@@ -17,10 +17,12 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 const API_BASE_URL = "http://localhost:5000/api";
 
 const OrderManagement = ({ orders, setOrders }) => {
+  const {translations} = useLanguage();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [loading, setLoading] = useState({});
@@ -59,6 +61,7 @@ const OrderManagement = ({ orders, setOrders }) => {
     }
   };
 
+
   return (
     <Paper
       elevation={3}
@@ -70,17 +73,18 @@ const OrderManagement = ({ orders, setOrders }) => {
       }}
     >
       <Typography variant="h6" gutterBottom sx={{ mb: 3 }}>
-        Order Management
+        {/* Order Management */}
+        {translations?.admin?.order_management_tab?.order_management || "Loading..."}
       </Typography>
 
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Order ID</TableCell>
-              {!isMobile && <TableCell>Customer</TableCell>}
-              <TableCell>Total</TableCell>
-              <TableCell>Status</TableCell>
+              <TableCell>{translations?.admin?.order_management_tab?.order_id || "Loading..."}</TableCell>
+              {!isMobile && <TableCell>{translations?.admin?.order_management_tab?.customer || "Loading..."}</TableCell>}
+              <TableCell>{translations?.admin?.order_management_tab?.total || "Loading..."}</TableCell>
+              <TableCell>{translations?.admin?.order_management_tab?.status || "Loading..."}</TableCell>
               {/* <TableCell>Actions</TableCell> */}
             </TableRow>
           </TableHead>
@@ -109,11 +113,12 @@ const OrderManagement = ({ orders, setOrders }) => {
                     disabled={loading[order._id]}
                     sx={{ minWidth: 120 }}
                   >
-                    {orderStatuses.map((status) => (
+                    {translations?.admin?.order_management_tab?.options.map((status) => (
                       <MenuItem key={status} value={status.toLowerCase()}>
                         {status}
                       </MenuItem>
                     ))}
+                    
                   </Select>
                 </TableCell>
                 {/* <TableCell>
