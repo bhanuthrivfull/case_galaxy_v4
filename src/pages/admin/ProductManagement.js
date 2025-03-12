@@ -31,10 +31,10 @@ import { useLanguage } from '../../contexts/LanguageContext';
 const API_BASE_URL = "http://localhost:5000/api";
 
 const ProductManagement = () => {
-  const {translations} = useLanguage() // new code
+  const { translations } = useLanguage() // new code
   const theme = useTheme();
   const { language } = useLanguage();
-  
+
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery(theme.breakpoints.down("md"));
   const [priceError, setPriceError] = useState(null);
@@ -148,7 +148,7 @@ const ProductManagement = () => {
     }
     return null;
   };
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -222,7 +222,8 @@ const ProductManagement = () => {
               color: theme.palette.primary.main,
             }}
           >
-            Product Management
+            {/* Product Management */}
+            {translations?.admin?.products_tab?.title || "Loading..."}
           </Typography>
         </Box>
 
@@ -238,7 +239,8 @@ const ProductManagement = () => {
                     fontSize: { xs: "1rem", sm: "1.25rem" },
                   }}
                 >
-                  Basic Information
+                  {/* Basic Information */}
+                  {translations?.admin?.products_tab?.basic_info || "Loading..."}
                 </Typography>
               </Grid>
 
@@ -491,14 +493,15 @@ const ProductManagement = () => {
                       fontSize: { xs: "1rem", sm: "1.25rem" },
                     }}
                   >
-                    Basic Information
+                    {/* Basic Information */}
+                    {translations?.admin?.products_tab?.basic_info || "Loading..."}
                   </Typography>
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Product Name"
+                    label={translations?.admin?.products_tab?.product_name_label || "Loading..."}
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
@@ -510,7 +513,7 @@ const ProductManagement = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Brand & Model"
+                    label={translations?.admin?.products_tab?.product_brand_label || "Loading..."}
                     name="model"
                     value={formData.model}
                     onChange={handleInputChange}
@@ -523,7 +526,7 @@ const ProductManagement = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Price"
+                    label={translations?.admin?.products_tab?.product_price_label || "Loading..."}
                     name="price"
                     type="number"
                     value={formData.price}
@@ -546,7 +549,7 @@ const ProductManagement = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Discount Price"
+                    label={translations?.admin?.products_tab?.product_discount_label || "Loading..."}
                     name="discountPrice"
                     type="number"
                     value={formData.discountPrice}
@@ -592,7 +595,8 @@ const ProductManagement = () => {
                         },
                       }}
                     >
-                      Category
+                      {/* Category */}
+                      {translations?.admin?.products_tab?.category_title || "Loading..."}
                     </InputLabel>
                     <Select
                       name="category"
@@ -638,7 +642,7 @@ const ProductManagement = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Image URL"
+                    label={translations?.admin?.products_tab?.img_url_label || "Loading..."}
                     name="image"
                     value={formData.image}
                     onChange={handleInputChange}
@@ -670,7 +674,7 @@ const ProductManagement = () => {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="Description"
+                    label={translations?.admin?.products_tab?.desc_label || "Loading..."}
                     name="description"
                     value={formData.description}
                     onChange={handleInputChange}
@@ -691,7 +695,7 @@ const ProductManagement = () => {
                         color="primary"
                       />
                     }
-                    label="In Stock"
+                    label={translations?.admin?.products_tab?.in_stock_label || "Loading..."}
                   />
                 </Grid>
 
@@ -713,7 +717,7 @@ const ProductManagement = () => {
                       fullWidth={isMobile}
                       sx={{ minWidth: { sm: "120px" } }}
                     >
-                      Reset
+                      {translations?.admin?.products_tab?.reset_btn || "Loading..."}
                     </Button>
                     <Button
                       type="submit"
@@ -725,7 +729,7 @@ const ProductManagement = () => {
                         loading ? <CircularProgress size={20} /> : <AddIcon />
                       }
                     >
-                      {loading ? "Adding..." : "Add Product"}
+                      {loading ? translations?.admin?.products_tab?.loading_btn?.adding : translations?.admin?.products_tab?.loading_btn?.add_product}
                     </Button>
                   </Box>
                 </Grid>
