@@ -96,7 +96,7 @@
         },
         "number_err_msg": {
           "required": "Phone number is required",
-          "pattern": "Phone number must start with a digit between 6 and 9, contain exactly 10 digits, and not have 9 consecutive identical digits."
+          "pattern": "Phone number must start with a digit between 6 and 9, contain exactly 10 digits, and not have 6 consecutive identical digits."
         }
         },
       "benefits_data": {
@@ -386,7 +386,7 @@
         },
         "number_err_msg": {
           "required": "电话号码是必填的",
-          "pattern": "电话号码必须以 6 到 9 之间的数字开头，必须包含 10 位数字，并且不能有 9 个连续相同的数字。"
+          "pattern": "电话号码必须以 6 到 9 之间的数字开头，必须包含 10 位数字，并且不能有 6 个连续相同的数字。"
         }
         },
       "benefits_data": {
