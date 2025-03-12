@@ -12,7 +12,7 @@ const languageNames = {
 export const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState(localStorage.getItem("preferredLanguage") || "en");
   const [translations, setTranslations] = useState({});
-
+  
   // Fetch translations from API whenever the language changes
   useEffect(() => {
     const fetchTranslations = async () => {

@@ -2,8 +2,10 @@ import { Box, Typography, Paper, Avatar } from "@mui/material";
 import { useAuth } from "../../contexts/AuthContext";
 import { motion } from "framer-motion";
 import { useTheme, useMediaQuery } from "@mui/material";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 function AdminProfile() {
+  const { translations } = useLanguage()
   const { user } = useAuth();
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down("md")); // Tablets
@@ -64,10 +66,10 @@ function AdminProfile() {
                 textTransform: "capitalize",
               }}
             >
-              {user?.name || "Admin"}
+              {user?.name || translations?.admin?.profile_tab?.user_name}
             </Typography>
             <Typography variant="subtitle1" color="text.secondary">
-              {user?.email || "admin@example.com"}
+              {user?.email || translations?.admin?.profile_tab?.user_email}
             </Typography>
           </Box>
         </Box>
@@ -86,7 +88,8 @@ function AdminProfile() {
               textAlign: isMobile ? "center" : "left",
             }}
           >
-            Role: Admin
+            {/* Role: Admin */}
+            { translations?.admin?.profile_tab?.role}
           </Typography>
         </motion.div>
       </Paper>

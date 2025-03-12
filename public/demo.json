@@ -295,7 +295,7 @@
         "management":"Management",
         "products":"Products",
         "profile_tab":{
-        "user_name":"admin",
+        "user_name":"Admin",
         "user_email":"admin@example.com",
         "role":"Role: Admin"
         },

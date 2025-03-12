@@ -98,11 +98,18 @@ function AdminPanel() {
     <ProductManagement key="products" />,
   ];
 
+  // const tabOptions = [
+  //   { label: "👤 Profile", value: 0 },
+  //   { label: "📦 Orders", value: 1 },
+  //   { label: "⚙️ Management", value: 2 },
+  //   { label: "🛍️ Products", value: 3 },
+  // ];
+
   const tabOptions = [
-    { label: "👤 Profile", value: 0 },
-    { label: "📦 Orders", value: 1 },
-    { label: "⚙️ Management", value: 2 },
-    { label: "🛍️ Products", value: 3 },
+    { label: `👤 ${translations?.admin?.profile}`, value: 0 },
+    { label: `📦  ${translations?.admin?.orders}`, value: 1 },
+    { label: `⚙️  ${translations?.admin?.management}`, value: 2 },
+    { label: `🛍️  ${translations?.admin?.products}`, value: 3 },
   ];
 
   return (
@@ -142,7 +149,7 @@ function AdminPanel() {
                 boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <Typography variant="h6">Admin Panel</Typography>
+              <Typography variant="h6">{translations?.admin?.title || "Loading..."}</Typography>
               <Box>
                 {/* Menu Button */}
                 <IconButton onClick={handleMenuOpen}>
@@ -166,7 +173,9 @@ function AdminPanel() {
                     </MenuItem>
                   ))}
                   <MenuItem onClick={logout} sx={{ color: "red" }}>
-                    <LogoutIcon sx={{ mr: 1 }} /> Logout
+                    <LogoutIcon sx={{ mr: 1 }} />
+                     {/* Logout */}
+                     {translations?.admin?.logout || "Loading..."}
                   </MenuItem>
                 </Menu>
               </Box>
@@ -193,7 +202,7 @@ function AdminPanel() {
               >
                 <LanguageSelector />
                 <Typography variant="h4" component="h1">
-                  Admin Panel
+                  {translations?.admin?.title || "Loading..."}
                 </Typography>
 
                 <Button
@@ -202,7 +211,9 @@ function AdminPanel() {
                   onClick={logout}
                   startIcon={<LogoutIcon />}
                 >
-                  Logout
+                  {/* Logout */}
+                  {translations?.admin?.logout || "Loading..."}
+
                 </Button>
               </Box>
 
