@@ -27,8 +27,10 @@ import AdminProfile from "./AdminProfile";
 import OrderHistory from "./OrderHistory";
 import OrderManagement from "./OrderManagement";
 import ProductManagement from "./ProductManagement";
-
+import LanguageSelector from "../../components/LanguageSelector";
+import { useLanguage } from "../../contexts/LanguageContext";
 function AdminPanel() {
+  const { translations } = useLanguage();
   const [value, setValue] = useState(0);
   const { user, logout } = useAuth();
   const [orders, setOrders] = useState([]);
@@ -189,6 +191,7 @@ function AdminPanel() {
                   alignItems: "center",
                 }}
               >
+                <LanguageSelector />
                 <Typography variant="h4" component="h1">
                   Admin Panel
                 </Typography>
@@ -229,6 +232,7 @@ function AdminPanel() {
                   <Tab key={tab.value} label={tab.label} />
                 ))}
               </Tabs>
+
             </Paper>
           )}
 

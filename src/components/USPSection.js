@@ -32,14 +32,14 @@ function USPSection() {
     <Box
       sx={{
         py: 10, // Increased padding for more space
-        px: 10, //
+        px: { xs: 2, sm: 10 }, // Adjusted padding for mobile
         bgcolor: "white", // White background
       }}
     >
       <Grid container spacing={5} justifyContent="center">
         {translations?.usp_items ? (
           translations?.usp_items.map((item, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
+            <Grid item xs={12} sm={6} md={4} key={index} sx={{ maxWidth: 320, width: "100%" }}> {/* Set maxWidth for mobile */}
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -58,6 +58,7 @@ function USPSection() {
                     backgroundColor: `${index % 3 === 0 ? "rgb(224, 236, 110)" : index % 3 === 1 ? "rgb(36, 235, 69)" : "rgb(237, 218, 119)"}`,
                     boxShadow: 6, // Added shadow for depth
                     height: "100%",
+                    minHeight: 320, // Ensure consistent height
                     transition: "all 0.3s ease", // Smooth transition for hover effects
                     "&:hover": {
                       transform: "translateY(-10px)", // Hover with subtle movement

@@ -286,6 +286,59 @@
         "err_psw_contain": "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
         "err_psw_match": "Passwords must match",
         "confirm_psw": "Confirm Password is required"
+      },
+      "admin":{
+        "title":"Admin Panel",
+        "logout":"Logout",
+        "profile":"Profile",
+        "orders":"Orders",
+        "management":"Management",
+        "products":"Products",
+        "profile_tab":{
+        "user_name":"admin",
+        "user_email":"admin@example.com",
+        "role":"Role: Admin"
+        },
+        "order_tab":{
+          "order_history":"Order History",
+          "order_id":"Order ID",
+          "customer":"Customer",
+          "total":"Total",
+          "status":"Status",
+          "date":"Date"
+        },
+        "order_management_tab":{
+          "order_management":"Order Management",
+          "order_id":"Order ID",
+          "customer":"Customer",
+          "total":"Total",
+          "status":"Status",
+          "options":[ "Pending","Processing","Shipped","Delivered","Cancelled"],
+          "toast_msg":{
+            "order_update":"Order Updated",
+            "order_success":"Order status updated successfully",
+            "err_update":"Error updating order status:",
+            "err_failed_update":"Failed to update order status"
+          }
+        },
+        "products_tab":{
+          "title":"Product Management",
+          "basic_info":"Basic Information",
+          "product_name_label":"Product Name",
+          "product_brand_label":"Brand & Model",
+          "product_price_label":"Price",
+          "product_discount_label":"Discount Price",
+          "category_title":"Category",
+          "category_opt_mobile":"Mobile",
+          "category_opt_tab":"Tablet",
+          "laptop_stock_out":"Laptop (Out of Stock)",
+          "smart_watch":" Smartwatch (Coming Soon)",
+          "img_url_label":"Image URL",
+          "desc_label":"Description",
+          "in_stock_label":"In Stock",
+          "reset_btn":"Reset",
+          "loading_btn":{"adding":"Adding...","add_product":"Add Product"}
+        }
       }
     }
   },
@@ -576,6 +629,62 @@
         "err_psw_contain": "密码必须包含至少一个大写字母、一个小写字母、一个数字和一个特殊字符",
         "err_psw_match": "两次输入的密码必须匹配",
         "confirm_psw": "确认密码是必填项"
+      },
+      "admin": {
+        "title": "管理面板",
+        "logout": "登出",
+        "profile": "个人资料",
+        "orders": "订单",
+        "management": "管理",
+        "products": "产品",
+        "profile_tab": {
+          "user_name": "管理员",
+          "user_email": "admin@example.com",
+          "role": "角色：管理员"
+        },
+        "order_tab": {
+          "order_history": "订单历史",
+          "order_id": "订单编号",
+          "customer": "客户",
+          "total": "总金额",
+          "status": "状态",
+          "date": "日期"
+        },
+        "order_management_tab": {
+          "order_management": "订单管理",
+          "order_id": "订单编号",
+          "customer": "客户",
+          "total": "总金额",
+          "status": "状态",
+          "options": ["待处理", "处理中", "已发货", "已送达", "已取消"],
+          "toast_msg": {
+            "order_update": "订单已更新",
+            "order_success": "订单状态更新成功",
+            "err_update": "更新订单状态出错：",
+            "err_failed_update": "订单状态更新失败"
+          }
+        },
+        "products_tab": {
+          "title": "产品管理",
+          "basic_info": "基本信息",
+          "product_name_label": "产品名称",
+          "product_brand_label": "品牌与型号",
+          "product_price_label": "价格",
+          "product_discount_label": "折扣价",
+          "category_title": "类别",
+          "category_opt_mobile": "手机",
+          "category_opt_tab": "平板",
+          "laptop_stock_out": "笔记本电脑（缺货）",
+          "smart_watch": "智能手表（即将推出）",
+          "img_url_label": "图片 URL",
+          "desc_label": "描述",
+          "in_stock_label": "库存",
+          "reset_btn": "重置",
+          "loading_btn": {
+            "adding": "添加中...",
+            "add_product": "添加产品"
+          }
+        }
       }
     }
   }

@@ -3,7 +3,6 @@ import { useLanguage } from "../contexts/LanguageContext";
 
 const LanguageSelector = () => {
   const { language, changeLanguage, languageNames } = useLanguage();
-
   return (
     <select
       value={language}
