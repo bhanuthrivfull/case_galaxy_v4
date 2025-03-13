@@ -152,6 +152,8 @@ function AdminPanel() {
               <Typography variant="h6">{translations?.admin?.title || "Loading..."}</Typography>
               <Box>
                 {/* Menu Button */}
+                <LanguageSelector />
+                
                 <IconButton onClick={handleMenuOpen}>
                   <MenuIcon />
                 </IconButton>
