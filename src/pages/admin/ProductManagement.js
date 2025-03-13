@@ -623,8 +623,8 @@ const ProductManagement = () => {
                       }}
                     >
                       {/* Available Categories */}
-                      <MenuItem value="Mobile">📱 Mobile</MenuItem>
-                      <MenuItem value="Tablet">📟 Tablet</MenuItem>
+                      <MenuItem value="Mobile">📱 {translations?.admin?.products_tab?.category_opt_mobile || "Loading..."}</MenuItem>
+                      <MenuItem value="Tablet">📟 {translations?.admin?.products_tab?.category_opt_tab || "Loading..."}</MenuItem>
 
                       {/* Unavailable Categories with Strikethrough */}
                       <MenuItem
@@ -632,14 +632,14 @@ const ProductManagement = () => {
                         disabled
                         sx={{ textDecoration: "line-through", color: "gray" }}
                       >
-                        💻 Laptop (Out of Stock)
+                        💻 {translations?.admin?.products_tab?.laptop_stock_out || "Loading..."}
                       </MenuItem>
                       <MenuItem
                         value="Smartwatch"
                         disabled
                         sx={{ textDecoration: "line-through", color: "gray" }}
                       >
-                        ⌚ Smartwatch (Coming Soon)
+                        ⌚ {translations?.admin?.products_tab?.smart_watch || "Loading..."}
                       </MenuItem>
                     </Select>
                   </FormControl>
