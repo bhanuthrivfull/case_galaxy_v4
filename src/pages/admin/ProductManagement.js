@@ -166,14 +166,17 @@ const ProductManagement = () => {
     console.log("Form Data being sent:", JSON.stringify([formData], null, 2));
 
     try {
-      const currentLanguage = localStorage.getItem('language') || 'en';
+      // const currentLanguage = localStorage.getItem(e.target.id) || 'en';
       const response = await fetch(`${API_BASE_URL}/add-products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify([formData]),
-        language: currentLanguage
+        body: JSON.stringify({
+          products: [formData],  // Keep products as an array
+          language: e.target.id, // Ensure language is part of the object
+        }),
+        
         
       });
 

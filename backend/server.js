@@ -827,8 +827,7 @@ app.post("/api/add-products", async (req, res) => {
   try {
     // Get products array and language from request
     const products = req.body.products || req.body;
-    const language = req.body.language || "en"; // Default to English if not specified
-    
+    const language = req.body.language ;
     console.log(`Received products for language: ${language}`);
     
     // Validate that we received data
