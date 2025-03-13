@@ -166,12 +166,15 @@ const ProductManagement = () => {
     console.log("Form Data being sent:", JSON.stringify([formData], null, 2));
 
     try {
+      const currentLanguage = localStorage.getItem('language') || 'en';
       const response = await fetch(`${API_BASE_URL}/add-products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify([formData]),
+        language: currentLanguage
+        
       });
 
       if (!response.ok) {

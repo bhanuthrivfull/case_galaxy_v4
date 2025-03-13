@@ -396,6 +396,7 @@ const productSchema = new mongoose.Schema({
   inStock: { type: Boolean, default: true },
   rating: { type: Number, default: 4.5 },
   reviews: { type: Number, default: 0 },
+  language:String
 });
 const Product = mongoose.model("Product", productSchema);
 
@@ -746,21 +747,47 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
+// app.get("/api/translations/:lang", async (req, res) => {
+//   try {
+//     const { lang } = req.params;
+//     const translation = await mongoose.connection.db
+//       .collection("translations")
+//       .findOne({ language: lang });
+
+//     if (!translation) {
+//       return res.status(404).json({ error: "Translations not found" });
+//     }
+
+//     res.json(translation.translations);
+//   } catch (error) {
+//     console.error("Error fetching translations:", error);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// });
 app.get("/api/translations/:lang", async (req, res) => {
   try {
     const { lang } = req.params;
+    
+    // Fetch translation for the specified language
     const translation = await mongoose.connection.db
       .collection("translations")
       .findOne({ language: lang });
 
     if (!translation) {
-      return res.status(404).json({ error: "Translations not found" });
+      return res.status(404).json({ error: "Translations not found for this language" });
     }
 
+    // Check if 'translations' exists on the found translation
+    if (!translation.translations) {
+      return res.status(500).json({ error: "Translations object is missing from the data" });
+    }
+
+    // Return the translations
     res.json(translation.translations);
+
   } catch (error) {
     console.error("Error fetching translations:", error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -777,20 +804,83 @@ app.get("/api/products/:id", async (req, res) => {
 });
 
 // In your Express backend
+// app.post("/api/add-products", async (req, res) => {
+//   try {
+//     const products = req.body; // This should be an array or a single object
+//     console.log("Received products:", products);
+
+//     if (!Array.isArray(products)) {
+//       // If it's a single object, convert it into an array
+//       await Product.create(products);
+//     } else {
+//       // If it's already an array, insert multiple
+//       await Product.insertMany(products);
+//     }
+
+//     res.status(201).json({ message: "Products added successfully" });
+//   } catch (error) {
+//     console.error("Error adding products:", error);
+//     res.status(500).json({ error: error.message });
+//   }
+// });
 app.post("/api/add-products", async (req, res) => {
   try {
-    const products = req.body; // This should be an array or a single object
-    console.log("Received products:", products);
-
-    if (!Array.isArray(products)) {
-      // If it's a single object, convert it into an array
-      await Product.create(products);
-    } else {
-      // If it's already an array, insert multiple
-      await Product.insertMany(products);
+    // Get products array and language from request
+    const products = req.body.products || req.body;
+    const language = req.body.language || "en"; // Default to English if not specified
+    
+    console.log(`Received products for language: ${language}`);
+    
+    // Validate that we received data
+    if (!products || (Array.isArray(products) && products.length === 0)) {
+      return res.status(400).json({ error: "No product data provided" });
+    }
+    
+    // Fetch translations for the selected language
+    const translation = await mongoose.connection.db
+      .collection("translations")
+      .findOne({ language: language });
+      
+    if (!translation) {
+      return res.status(404).json({ error: `Translations for language '${language}' not found` });
     }
 
-    res.status(201).json({ message: "Products added successfully" });
+    // Check if translation.translations.categories exists
+    const categories = translation.translations?.categories || {};
+
+    // Process products with translations
+    const processedProducts = Array.isArray(products) ? products : [products];
+    
+    // Apply translations to product data if needed
+    const localizedProducts = processedProducts.map(product => {
+      const localizedCategory = categories[product.category] || product.category;  // Safe category access
+      
+      // Map product fields and add language and localized category
+      return {
+        name: product.name,
+        model: product.model,
+        image: product.image,
+        description: product.description,
+        price: parseFloat(product.price),  // Ensure price is a number
+        discountPrice: parseFloat(product.discountPrice),  // Ensure discountPrice is a number
+        category: product.category,  // Original category
+        localizedCategory: localizedCategory,  // Translated category
+        inStock: product.inStock,
+        rating: parseFloat(product.rating),  // Ensure rating is a number
+        reviews: parseInt(product.reviews, 10),  // Ensure reviews is an integer
+        language: language,  // Add language information
+      };
+    });
+    
+    // Save to database
+    const result = await Product.insertMany(localizedProducts);
+    console.log(result)
+    res.status(201).json({ 
+      message: translation.translations?.successMessages?.productAdded || "Products added successfully",
+      productIds: result.map(product => product._id),
+      language: language
+    });
+    
   } catch (error) {
     console.error("Error adding products:", error);
     res.status(500).json({ error: error.message });
