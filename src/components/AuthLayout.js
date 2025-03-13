@@ -11,7 +11,7 @@ const AuthLayout = ({ children }) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundImage: "url('/assets/background4k.jpg')",
+        backgroundImage: "url('/assets/login_bg.jpg')",
         backgroundRepeat: 'no-repeat',  // Prevents the background from repeating
         backgroundSize: 'cover',       // Ensures the image covers the area
         padding: { xs: 2, sm: 4, md: 6 },
@@ -32,7 +32,7 @@ const AuthLayout = ({ children }) => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            backgroundColor: "rgba(209, 209, 209, 0.65)",
+            backgroundColor: "rgba(209, 209, 209, 0.8)",
             borderRadius: '20px',          // Adjust the value to your preferred border radius
           }}
         >
