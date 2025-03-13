@@ -22,8 +22,7 @@ const API_BASE_URL =
   process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
 function ProductShowcase({ category }) {
-  const { translations } = useLanguage();
-
+  const { translations, language } = useLanguage();
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -32,6 +31,7 @@ function ProductShowcase({ category }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [loadingProducts, setLoadingProducts] = useState({}); // Track loading state per product 
+
 
   useEffect(() => {
     fetchProducts();
@@ -60,10 +60,10 @@ function ProductShowcase({ category }) {
 
     try {
       const userEmail = localStorage.getItem("userEmail"); // Get email from localStorage or auth system
-      setLoadingProducts((prev) => ({ 
+      setLoadingProducts((prev) => ({
         ...prev,
         [product._id]: true,
-      })); 
+      }));
 
       if (!userEmail) {
         toast.error("User not logged in!");
@@ -100,7 +100,7 @@ function ProductShowcase({ category }) {
     } catch (error) {
       toast.error("Failed to add item to cart");
     }
-    finally {               
+    finally {
       // Clear loading state for this specific product
       setLoadingProducts((prev) => ({
         ...prev,
@@ -147,7 +147,7 @@ function ProductShowcase({ category }) {
       sx={{
         py: 4,
         px: 2,
-        maxWidth: "100%", 
+        maxWidth: "100%",
         margin: "0 auto",
         backgroundImage: 'linear-gradient(45deg,rgb(255, 255, 255),rgb(255, 255, 255))',
         boxShadow: 3,
@@ -168,187 +168,190 @@ function ProductShowcase({ category }) {
         spacing={2}
         sx={{ display: "flex", justifyContent: "center" }}
       >
-        {products.map((product, index) => (
-          <Grid item xs={12} sm={6} md={getGridSize()} key={product._id}>
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <Card
-                onClick={() => handleCardClick(product._id)}
-                sx={{
-                  backgroundImage: 'linear-gradient(45deg,rgb(255, 255, 255),rgb(255, 255, 255))',
-                  borderRadius: 3,
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  boxShadow: 4,
-                  cursor: "pointer",
-                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                  "&:hover": {
-                    transform: "translateY(-10px)",
-                    boxShadow: 8,
-                  },
-                }}
+        {products
+          .filter(product => product.language === language) // Filter products based on selected language
+          .map((product, index) => (
+            <Grid item xs={12} sm={6} md={getGridSize()} key={product._id}>
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
               >
-                <CardMedia
-                  component="img"
+                <Card
+                  onClick={() => handleCardClick(product._id)}
                   sx={{
-                    width: "100%",
-                    height: 150,
-                    objectFit: "contain",
-                    backgroundColor: "white",
-                    transition: "transform 0.3s ease",
-                    "&:hover": {
-                      transform: "scale(1.03)",
-                    },
-                  }}
-                  image={product.image}
-                  alt={product.name}
-                />
-
-                <CardContent
-                  sx={{
-                    flexGrow: 1,
-                    textAlign: "center",
+                    backgroundImage: 'linear-gradient(45deg,rgb(255, 255, 255),rgb(255, 255, 255))',
+                    borderRadius: 3,
+                    height: "100%",
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "space-between",
-                    p: 2,
                     boxShadow: 4,
-                    borderRadius: "12px",
-                    backgroundColor: 'rgb(114, 245, 248)',
+                    cursor: "pointer",
+                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                    "&:hover": {
+                      transform: "translateY(-10px)",
+                      boxShadow: 8,
+                    },
                   }}
                 >
-                  <Typography
-                    gutterBottom
-                    variant="h6"
-                    component="div"
+                  <CardMedia
+                    component="img"
                     sx={{
-                      color: "text.primary",
-                      fontWeight: "bold",
-                      mb: 1,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      fontSize: { xs: "1rem", sm: "1.2rem" },
-                      "@media (max-width: 768px)": {
-                        fontSize: "0.5rem",
-                        lineHeight: "1.0rem",
-                        height: "8vh",
-                      }
+                      width: "100%",
+                      height: 150,
+                      objectFit: "contain",
+                      backgroundColor: "white",
+                      transition: "transform 0.3s ease",
+                      "&:hover": {
+                        transform: "scale(1.03)",
+                      },
                     }}
-                  >
-                    <span
-                      style={{
-                        fontSize: "1.3rem",
-                        fontWeight: "500",
-                        color: "#171616",
-                        backgroundImage: "linear-gradient(to right, rgb(22, 21, 21), rgb(12, 12, 12))",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparentAdmin Panel",
-                        padding: "0.2em 0.4em",
-                        borderRadius: "4px",
-                      }}
-                    >
-                      {product.model}
-                    </span>
-                  </Typography>
+                    image={product.image}
+                    alt={product.name}
+                  />
 
-                  <Box
+                  <CardContent
                     sx={{
+                      flexGrow: 1,
+                      textAlign: "center",
                       display: "flex",
-                      flexDirection: { xs: "column", sm: "row" },
-                      justifyContent: { sm: "space-between" },
-                      alignItems: "center",
-                      mt: 1,
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      p: 2,
+                      boxShadow: 4,
+                      borderRadius: "12px",
+                      backgroundColor: 'rgb(114, 245, 248)',
                     }}
                   >
                     <Typography
+                      gutterBottom
                       variant="h6"
-                      color="rgb(0, 0, 0)"
+                      component="div"
                       sx={{
+                        color: "text.primary",
                         fontWeight: "bold",
+                        mb: 1,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
                         fontSize: { xs: "1rem", sm: "1.2rem" },
+                        "@media (max-width: 768px)": {
+                          fontSize: "0.5rem",
+                          lineHeight: "1.0rem",
+                          height: "8vh",
+                        }
                       }}
                     >
-                      ₹{parseFloat(product.price - product.discountPrice).toFixed(2)}
+                      <span
+                        style={{
+                          fontSize: "1.3rem",
+                          fontWeight: "500",
+                          color: "#171616",
+                          backgroundImage: "linear-gradient(to right, rgb(22, 21, 21), rgb(12, 12, 12))",
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparentAdmin Panel",
+                          padding: "0.2em 0.4em",
+                          borderRadius: "4px",
+                        }}
+                      >
+                        {product.model}
+                      </span>
                     </Typography>
-                    {product.discountPrice > 0 && (
+
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: { xs: "column", sm: "row" },
+                        justifyContent: { sm: "space-between" },
+                        alignItems: "center",
+                        mt: 1,
+                      }}
+                    >
                       <Typography
-                        variant="body2"
-                        color="error"
+                        variant="h6"
+                        color="rgb(0, 0, 0)"
                         sx={{
                           fontWeight: "bold",
-                          textDecoration: "line-through",
-                          mx: { xs: 0, sm: 1 },
-                          mt: { xs: 0.5, sm: 0 },
-                          fontSize: { xs: "1.2rem", sm: "1.3rem" },
+                          fontSize: { xs: "1rem", sm: "1.2rem" },
                         }}
                       >
-                        ₹{product.price}
+                        ₹{parseFloat(product.price - product.discountPrice).toFixed(2)}
                       </Typography>
-                    )}
-                    {product.discountPrice > 0 && (
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          mt: 0,
-                          color: "#333",
-                          fontSize: {
-                            xs: "0.7rem",
-                            sm: "0.8rem",
-                            lg: "0.9rem",
-                          },
-                        }}
-                      >
-                        {translations?.save_title || "Loading..."} ₹
-                        {parseFloat(product.discountPrice).toFixed(2)}
-                      </Typography>
-                    )}
-                  </Box>
-                  <Button
-                    variant="contained"
-                    onClick={(e) => handleAddToCart(e, product)}
-                    disabled={!product.inStock || loadingProducts[product._id]}
-                    sx={{
-                      mt: 2,
-                      color: "black",
-                      fontSize: { xs: "0.5rem", sm: "1rem" },
-                      py: { xs: 1, sm: 1.5 },
-                      width: { xs: "100%", sm: "auto" },
-                      backgroundColor: "rgb(244, 241, 78)",
-                      boxShadow: 3,
-                      "&:hover": {
-                        bgcolor: "",
-                      },
-                    }}
-                  >
-                    {loadingProducts[product._id] ? (
-                      <>
-                        <CircularProgress
-                          size={24}
+                      {product.discountPrice > 0 && (
+                        <Typography
+                          variant="body2"
+                          color="error"
                           sx={{
-                            position: "absolute",
-                            left: "50%",
-                            marginLeft: "-12px",
-                            color: "white",
+                            fontWeight: "bold",
+                            textDecoration: "line-through",
+                            mx: { xs: 0, sm: 1 },
+                            mt: { xs: 0.5, sm: 0 },
+                            fontSize: { xs: "1.2rem", sm: "1.3rem" },
                           }}
-                        />
-                        <span style={{ opacity: 0 }}>{translations?.add_to_cart || "Loading..."}</span>
-                      </>
-                    ) : (
-                      <span>
-                        {translations?.add_to_cart || "Loading..."}
-                      </span>
-                    )} 
-                  </Button>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </Grid>
-        ))}
+                        >
+                          ₹{product.price}
+                        </Typography>
+                      )}
+                      {product.discountPrice > 0 && (
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            mt: 0,
+                            color: "#333",
+                            fontSize: {
+                              xs: "0.7rem",
+                              sm: "0.8rem",
+                              lg: "0.9rem",
+                            },
+                          }}
+                        >
+                          {translations?.save_title || "Loading..."} ₹
+                          {parseFloat(product.discountPrice).toFixed(2)}
+                        </Typography>
+                      )}
+                    </Box>
+                    <Button
+                      variant="contained"
+                      onClick={(e) => handleAddToCart(e, product)}
+                      disabled={!product.inStock || loadingProducts[product._id]}
+                      sx={{
+                        mt: 2,
+                        color: "black",
+                        fontSize: { xs: "0.5rem", sm: "1rem" },
+                        py: { xs: 1, sm: 1.5 },
+                        width: { xs: "100%", sm: "auto" },
+                        backgroundColor: "rgb(244, 241, 78)",
+                        boxShadow: 3,
+                        "&:hover": {
+                          bgcolor: "",
+                        },
+                      }}
+                    >
+                      {loadingProducts[product._id] ? (
+                        <>
+                          <CircularProgress
+                            size={24}
+                            sx={{
+                              position: "absolute",
+                              left: "50%",
+                              marginLeft: "-12px",
+                              color: "white",
+                            }}
+                          />
+                          <span style={{ opacity: 0 }}>{translations?.add_to_cart || "Loading..."}</span>
+                        </>
+                      ) : (
+                        <span>
+                          {translations?.add_to_cart || "Loading..."}
+                        </span>
+                      )}
+                    </Button>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </Grid>
+          ))}
+
       </Grid>
     </Box>
   );
