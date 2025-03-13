@@ -119,19 +119,19 @@ const ProductManagement = () => {
       const discountNum = Number(discountPrice);
 
       if (priceNum < 2) {
-        return "Regular price must be at least ₹2";
+        return translations?.admin?.products_tab?.regular_price_min_error;
       }
       if (priceNum > 10000) {
-        return "Regular price cannot exceed ₹10,000";
+        return translations?.admin?.products_tab?.regular_price_max_error;
       }
       if (discountNum >= priceNum) {
-        return "Discount price must be less than regular price";
+        return translations?.admin?.products_tab?.discount_price_comparison_error;
       }
       if (discountNum < 1) {
-        return "Discount price must be at least ₹1";
+        return translations?.admin?.products_tab?.discount_price_min_error;
       }
       if (discountNum > 10000) {
-        return "Discount price cannot exceed ₹10,000";
+        return translations?.admin?.products_tab?.discount_price_max_error;
       }
     }
     return null;
@@ -158,7 +158,7 @@ const ProductManagement = () => {
     if (priceError) {
       setSnackbar({
         open: true,
-        message: "Please fix price errors before submitting",
+        message: translations?.admin?.products_tab?.price_fix_message,
         severity: "error",
       });
       return;
@@ -181,12 +181,12 @@ const ProductManagement = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to add product");
+        throw new Error(translations?.admin?.products_tab?.product_add_failed);
       }
 
       setSnackbar({
         open: true,
-        message: "Product added successfully!",
+        message: translations?.admin?.products_tab?.product_add_success,
         severity: "success",
       });
       resetForm();
