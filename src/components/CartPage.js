@@ -132,7 +132,7 @@ function CartPage() {
     setIsCheckoutOpen(true);
   };
 
-  const { translations } = useLanguage();
+  const { translations,language } = useLanguage();
 
   return (
     <>
@@ -208,7 +208,7 @@ function CartPage() {
                                   variant="body2"
                                   color="text.primary"
                                 >
-                                  ₹{(item.productId.price - item.productId.discountPrice).toFixed(2)}
+                                  {language==="en"?"₹":"¥"}{(item.productId.price - item.productId.discountPrice).toFixed(2)}
                                 </Typography>
                                 {item.productId.discountPrice && (
                                   <Typography
@@ -221,8 +221,7 @@ function CartPage() {
                                       fontSize: "0.9rem",
                                     }}
                                   >
-                                    ₹{item.productId.price}
-
+                                    {language==="en"?"₹":"¥"}{item.productId.price}
                                   </Typography>
                                 )}
                                 <Box
@@ -269,7 +268,7 @@ function CartPage() {
               </List>
               <Box sx={{ mt: 5, textAlign: "right" }}>
                 <Typography variant="h6" sx={{ mb: 2 }}>
-                {translations?.cart_modal?.total || "Loading..."}: ₹{getTotalPrice()}
+                {translations?.cart_modal?.total || "Loading..."}: {language==="en"?"₹":"¥"}{getTotalPrice()}
                   
 
                 </Typography>

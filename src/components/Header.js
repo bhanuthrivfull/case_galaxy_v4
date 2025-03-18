@@ -72,7 +72,7 @@ function Header(props) {
   };
 
   const { translations } = useLanguage()
-
+console.log('Responss==>',translations)
   return (
     <>
       <motion.div>

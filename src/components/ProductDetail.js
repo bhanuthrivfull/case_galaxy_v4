@@ -29,7 +29,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 const API_BASE_URL = "http://localhost:5000/api";
 
 function ProductDetail() {
-  const {translations} = useLanguage();
+  const {translations,language} = useLanguage();
   const { productId } = useParams();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -287,7 +287,7 @@ function ProductDetail() {
                     fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem" },
                   }}
                 >
-                  ₹{(product.price - product.discountPrice).toFixed(2)}
+                  {language==="en"?"₹":"¥"}{(product.price - product.discountPrice).toFixed(2)}
                 </Typography>
 
                 {product.discountPrice && (
@@ -296,7 +296,7 @@ function ProductDetail() {
                     color="error"
                     sx={{ mb: 1, textDecoration: "line-through" }}
                   >
-                    ₹{product.price}
+                    {language==="en"?"₹":"¥"}{product.price}
                   </Typography>
                 )}
 

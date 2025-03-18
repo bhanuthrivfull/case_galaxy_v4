@@ -275,7 +275,7 @@ function ProductShowcase({ category }) {
                           fontSize: { xs: "1rem", sm: "1.2rem" },
                         }}
                       >
-                        ₹{parseFloat(product.price - product.discountPrice).toFixed(2)}
+                        {language==="en"?"₹":"¥"}{parseFloat(product.price - product.discountPrice).toFixed(2)}
                       </Typography>
                       {product.discountPrice > 0 && (
                         <Typography
@@ -289,7 +289,7 @@ function ProductShowcase({ category }) {
                             fontSize: { xs: "1.2rem", sm: "1.3rem" },
                           }}
                         >
-                          ₹{product.price}
+                          {language==="en"?"₹":"¥"}{product.price}
                         </Typography>
                       )}
                       {product.discountPrice > 0 && (
@@ -305,7 +305,7 @@ function ProductShowcase({ category }) {
                             },
                           }}
                         >
-                          {translations?.save_title || "Loading..."} ₹
+                          {translations?.save_title || "Loading..."} {language==="en"?"₹":"¥"} 
                           {parseFloat(product.discountPrice).toFixed(2)}
                         </Typography>
                       )}
