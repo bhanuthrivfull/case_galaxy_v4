@@ -313,7 +313,7 @@
           "customer":"Customer",
           "total":"Total",
           "status":"Status",
-          "options":[ "Pending","Processing","Shipped","Delivered","Cancelled"],
+         "options": ["Pending", "Processing", "Shipped", "Delivered", "Cancelled", "Confirmed"],
           "toast_msg":{
             "order_update":"Order Updated",
             "order_success":"Order status updated successfully",
@@ -664,7 +664,7 @@
           "customer": "客户",
           "total": "总金额",
           "status": "状态",
-          "options": ["待处理", "处理中", "已发货", "已送达", "已取消"],
+          "options": ["待处理", "处理中", "已发货", "已送达", "已取消", "已确认"],
           "toast_msg": {
             "order_update": "订单已更新",
             "order_success": "订单状态更新成功",

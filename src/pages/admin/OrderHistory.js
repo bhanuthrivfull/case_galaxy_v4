@@ -16,7 +16,7 @@ import {
 import { useLanguage } from '../../contexts/LanguageContext';
 
 const OrderHistory = ({ orders }) => {
-  const {translations} = useLanguage();
+  const { translations, language } = useLanguage();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -27,25 +27,73 @@ const OrderHistory = ({ orders }) => {
       shipped: 'primary',
       delivered: 'success',
       cancelled: 'error',
+      confirmed: 'secondary',
+      cancancelled: 'default',
     };
     return statusColors[status.toLowerCase()] || 'default';
   };
 
+  const statusTranslations = {
+    en: {
+      Pending: "Pending",
+      Processing: "Processing",
+      Shipped: "Shipped",
+      Delivered: "Delivered",
+      Cancelled: "Cancelled",
+      Confirmed: "Confirmed",
+    },
+    zh: {
+      Pending: "待处理",
+      Processing: "处理中",
+      Shipped: "已发货",
+      Delivered: "已送达",
+      Cancelled: "已取消",
+      Confirmed: "已确认",
+    },
+  };
+  
+  // Ensure all status values are recognized, including Chinese ones
+  const normalizeStatus = (status) => {
+    const normalized = {
+      "pending": "Pending",
+      "processing": "Processing",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled",
+      "confirmed": "Confirmed",
+      "待处理": "Pending",
+      "处理中": "Processing",
+      "已发货": "Shipped",
+      "已送达": "Delivered",
+      "已取消": "Cancelled",
+      "已确认": "Confirmed",
+    };
+    return normalized[status.toLowerCase()] || status;
+  };
+  
+  // Get translated status while ensuring fallback to English
+  const getTranslatedStatus = (status) => {
+    const normalizedStatus = normalizeStatus(status);
+    return (
+      statusTranslations[language]?.[normalizedStatus] ||
+      statusTranslations["en"][normalizedStatus] ||
+      status
+    );
+  };
+  
   return (
     <Paper
       elevation={3}
       sx={{
         p: 2,
         borderRadius: 2,
-          background: "linear-gradient(135deg,rgba(178, 185, 158, 0.07),rgb(95, 246, 105))",
- // Linear gradient background
+        background: "linear-gradient(135deg, rgba(178, 185, 158, 0.07), rgb(95, 246, 105))",
       }}
     >
       <Typography variant="h6" gutterBottom sx={{ mb: 3 }}>
-        {/* Order History */}
         {translations?.admin?.order_tab?.order_history || "Loading..."}
       </Typography>
-      
+
       <TableContainer>
         <Table>
           <TableHead>
@@ -74,7 +122,7 @@ const OrderHistory = ({ orders }) => {
                 <TableCell>₹{order.totalAmount.toFixed(2)}</TableCell>
                 <TableCell>
                   <Chip
-                    label={order.orderStatus}
+                    label={getTranslatedStatus(order.orderStatus)}
                     color={getStatusColor(order.orderStatus)}
                     size="small"
                   />
