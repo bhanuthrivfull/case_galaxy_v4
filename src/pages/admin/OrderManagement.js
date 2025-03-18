@@ -22,7 +22,7 @@ import { useLanguage } from "../../contexts/LanguageContext";
 const API_BASE_URL = "http://localhost:5000/api";
 
 const OrderManagement = ({ orders, setOrders }) => {
-  const {translations} = useLanguage();
+  const {translations,language} = useLanguage();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [loading, setLoading] = useState({});
@@ -102,7 +102,7 @@ const OrderManagement = ({ orders, setOrders }) => {
                     </Box>
                   </TableCell>
                 )}
-                <TableCell>₹{order.totalAmount.toFixed(2)}</TableCell>
+                <TableCell>{language==="en"?"₹":"¥"}{order.totalAmount.toFixed(2)}</TableCell>
                 <TableCell>
                   <Select
                     value={order.orderStatus}
