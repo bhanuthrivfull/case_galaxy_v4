@@ -52,8 +52,8 @@ const OrderHistory = ({ orders }) => {
     },
   };
   
-  // Ensure all status values are recognized, including Chinese ones
   const normalizeStatus = (status) => {
+    console.log('Status=====>',status)
     const normalized = {
       "pending": "Pending",
       "processing": "Processing",
@@ -119,7 +119,7 @@ const OrderHistory = ({ orders }) => {
                     </Box>
                   </TableCell>
                 )}
-                <TableCell>₹{order.totalAmount.toFixed(2)}</TableCell>
+                <TableCell>{language==="en"?"₹":"¥"}{order.totalAmount.toFixed(2)}</TableCell>
                 <TableCell>
                   <Chip
                     label={getTranslatedStatus(order.orderStatus)}
