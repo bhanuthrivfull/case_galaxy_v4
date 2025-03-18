@@ -92,7 +92,7 @@ const LeadCaptureForm = () => {
       md: "2.5rem",
       lg: "3rem",
     },
-    fontWeight: 600,
+    fontWeight: 500,
     textAlign: "center",
     marginBottom: "2rem",
     color: "#6200ea", // Purple text color for the title
