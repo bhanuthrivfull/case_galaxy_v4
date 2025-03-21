@@ -125,7 +125,7 @@ const LeadCaptureForm = () => {
     phone: {
       required: translations?.lead_capture?.number_err_msg?.required || "Phone number is required",
       pattern: translations?.lead_capture?.number_err_msg?.pattern ||
-        "Phone number must start with a digit between 6 and 9, contain exactly 10 digits, and not have 9 consecutive identical digits."
+        "Phone number must start with a digit between 6 and 9, contain exactly 10 digits, and not have 6 consecutive identical digits."
     }
   };
 
