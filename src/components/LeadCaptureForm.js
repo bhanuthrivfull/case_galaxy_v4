@@ -72,7 +72,7 @@ const newTheme = createTheme({
 });
 
 const LeadCaptureForm = () => {
-  const {translations} = useLanguage();
+  const { translations } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -100,25 +100,25 @@ const LeadCaptureForm = () => {
 
   // Validation patterns
   const patterns = {
-    name:/^[A-Z][a-zA-Z\s]{2,39}$/,
+    name: /^[A-Z][a-zA-Z](?: [A-Z][a-zA-Z]){0,19}$/,
     phone: /^(?!.*(\d)\1{6})[6-9]\d{9}$/,
   };
 
- 
+
 
   const errorMessages = {
     name: {
       required: translations?.lead_capture?.name_err_msg?.required || "Name is required",
-      pattern: translations?.lead_capture?.name_err_msg?.pattern || 
-               "Name must start with a capital letter, contain only letters (no numbers or special characters), and allow only a single space between words."
+      pattern: translations?.lead_capture?.name_err_msg?.pattern ||
+        "Name must start with a capital letter, contain only letters (no numbers or special characters), and allow only a single space between words."
     },
     phone: {
       required: translations?.lead_capture?.number_err_msg?.required || "Phone number is required",
-      pattern: translations?.lead_capture?.number_err_msg?.pattern || 
-               "Phone number must start with a digit between 6 and 9, contain exactly 10 digits, and not have 9 consecutive identical digits."
+      pattern: translations?.lead_capture?.number_err_msg?.pattern ||
+        "Phone number must start with a digit between 6 and 9, contain exactly 10 digits, and not have 9 consecutive identical digits."
     }
   };
-  
+
 
   const validateField = (name, value) => {
     if (!value) return errorMessages[name].required;
@@ -187,7 +187,7 @@ const LeadCaptureForm = () => {
     alignItems: "center",
     justifyContent: "center",
     padding: "2rem",
-    backgroundColor: "#ffffff", 
+    backgroundColor: "#ffffff",
   };
 
   const paperStyles = {
@@ -224,18 +224,18 @@ const LeadCaptureForm = () => {
                     fullWidth
                   />
                   <TextField
-   label={translations?.lead_capture?.number_label || "Phone Number"}
-   name="phone"
-   value={formData.phone}
-   onChange={handleChange}
-   onBlur={() => handleBlur("phone")}
-   error={touched.phone && !!errors.phone}
-   helperText={touched.phone && errors.phone}
-   fullWidth
-   InputProps={{
-    inputProps: { maxLength: 10 } 
-  }}
-/>
+                    label={translations?.lead_capture?.number_label || "Phone Number"}
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    onBlur={() => handleBlur("phone")}
+                    error={touched.phone && !!errors.phone}
+                    helperText={touched.phone && errors.phone}
+                    fullWidth
+                    InputProps={{
+                      inputProps: { maxLength: 10 }
+                    }}
+                  />
                   {errors.submit && (
                     <Alert severity="error" sx={{ marginBottom: "1rem" }}>
                       {errors.submit}
