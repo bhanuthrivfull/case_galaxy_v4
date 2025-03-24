@@ -104,7 +104,7 @@ const LeadCaptureForm = () => {
     phone: /^(?!.*(\d)\1{6})[6-9]\d{9}$/,
   };
 
-  // Error messages
+  // Error messages``
   // const errorMessages = {
   //   name: {
   //     required: translations?.lead_capture?.errName?.required || "Name is required",
