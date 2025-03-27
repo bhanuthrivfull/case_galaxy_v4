@@ -56,7 +56,7 @@ const Login = () => {
   ),
     password: yup
       .string()
-      .required(translations?.login?.psw_err_msg?.required || "Password is required.")
+      .required( "Password is required.")
       .test(
         "no-whitespace",
         "Password cannot contain spaces.",
@@ -129,7 +129,7 @@ const Login = () => {
     <AuthLayout>
       <motion.div initial="hidden" animate="visible" variants={formAnimation}>
         <Typography component="h1" variant="h4" gutterBottom align="center" style={{ fontStyle: "italic", fontWeight: "bold" }}>
-          {translations?.login?.title || "Loading..."}
+          {"Log In"}
         </Typography>
 
         {error && (
@@ -159,7 +159,7 @@ const Login = () => {
                 required
                 fullWidth
                 id="email"
-                label={translations?.login?.email_label || "Loading..."}
+                label={"Email Address"}
                 autoComplete="email"
                 autoFocus
                 error={!!errors.email}
@@ -195,7 +195,7 @@ const Login = () => {
                 margin="normal"
                 required
                 fullWidth
-                label={translations?.login?.psw_label || "Loading..."}
+                label={"Password"}
                 type={showPassword ? "text" : "password"}
                 id="password"
                 autoComplete="current-password"
@@ -244,7 +244,7 @@ const Login = () => {
             }}
             disabled={isSubmitting}
           >
-            {isSubmitting ? translations?.login?.login_load : translations?.login?.title}
+            {isSubmitting ? "Logging in..." : "Log In"}
           </Button>
 
           <Box
@@ -265,7 +265,7 @@ const Login = () => {
                 navigate("/forgotpassword");
               }}
             >
-              {translations?.login?.forgot_psw || "Loading..."}
+              {"Forgot password?"}
             </Link>
             <Link
               href="/signup"
@@ -275,7 +275,7 @@ const Login = () => {
                 navigate("/signup");
               }}
             >
-              {translations?.login?.dont_have_account || "Loading..."}
+              {"Don't have an account? Sign Up"}
             </Link>
           </Box>
         </Box>

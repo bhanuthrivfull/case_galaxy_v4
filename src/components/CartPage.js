@@ -208,7 +208,7 @@ function CartPage() {
                                   variant="body2"
                                   color="text.primary"
                                 >
-                                  {language === "en" ? "₹" : "¥"}{(item.productId.price - item.productId.discountPrice).toFixed(2)}
+                                  ₹{(item.productId.price - item.productId.discountPrice).toFixed(2)}
                                 </Typography>
                                 {item.productId.discountPrice && (
                                   <Typography
@@ -221,7 +221,7 @@ function CartPage() {
                                       fontSize: "0.9rem",
                                     }}
                                   >
-                                    {language === "en" ? "₹" : "¥"}{item.productId.price}
+                                    ₹{item.productId.price}
                                   </Typography>
                                 )}
                                 <Box
@@ -268,7 +268,7 @@ function CartPage() {
               </List>
               <Box sx={{ mt: 5, textAlign: "right" }}>
                 <Typography variant="h6" sx={{ mb: 2 }}>
-                  {"Total"}: {language === "en" ? "₹" : "¥"}{getTotalPrice()}
+                  {"Total"}: ₹{getTotalPrice()}
 
 
                 </Typography>

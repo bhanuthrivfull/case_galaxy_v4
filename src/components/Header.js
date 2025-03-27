@@ -12,6 +12,7 @@ import {
   Toolbar,
   Typography,
   Badge,
+  Tooltip,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import {
@@ -194,8 +195,12 @@ function Header(props) {
               </motion.div>
 
               {/* Right Menu */}
-              <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0, sm: 2 } }}>
-                {/* Cart Icon */}
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <Tooltip title="Language" placement="bottom">
+                  <Box onClick={handleReloadClick} sx={{ cursor: 'pointer' }}>
+                    <Typography>🌐</Typography>
+                  </Box>
+                </Tooltip>
                 <Box sx={{ display: props.customStyles }}>
                   <div id="google_translate_element" />
                   <style>
@@ -220,13 +225,14 @@ function Header(props) {
                     `}
                   </style>
                 </Box>
+                {/* Cart Icon */}
                 <IconButton
                   color="inherit"
                   component={Link}
                   to="/cart"
                   sx={{ display: props.customStyles }}
                 >
-                  <Badge badgeContent={cartItemCount} color="info">
+                  <Badge badgeContent={cartItemCount} color="secondary">
                     <ShoppingCart />
                   </Badge>
                 </IconButton>
@@ -249,6 +255,7 @@ function Header(props) {
                 >
                   Logout
                 </Button>
+
 
                 {/* Mobile Menu Button */}
                 <Box sx={{ display: { xs: "block", md: "none" } }}>

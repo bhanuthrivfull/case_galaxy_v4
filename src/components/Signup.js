@@ -187,7 +187,7 @@ const Signup = () => {
           align="center"
           style={{ fontStyle: "italic", fontWeight: "bold" }}
         >
-          {translations?.sign_up?.title || "Loading..."}
+          {"Create Account"}
         </Typography>
 
         <AnimatePresence>
@@ -202,7 +202,7 @@ const Signup = () => {
           {success && (
             <motion.div {...alertAnimation}>
               <Alert severity="success" sx={{ mb: 2 }}>
-                {translations?.sign_up?.account_created || "Loading..."}
+                {"Account created successfully! Redirecting..."}
               </Alert>
             </motion.div>
           )}
@@ -228,7 +228,7 @@ const Signup = () => {
                 required
                 fullWidth
                 id="name"
-                label={translations?.sign_up?.full_name_label || "Loading"}
+                label={"Full Name"}
                 autoComplete="name"
                 autoFocus
                 error={!!errors.name}
@@ -255,7 +255,7 @@ const Signup = () => {
                 required
                 fullWidth
                 id="email"
-                label={translations?.sign_up?.email_address_label || "Loading"}
+                label={"Email Address"}
                 autoComplete="email"
                 error={!!errors.email}
                 helperText={errors.email?.message}
@@ -289,7 +289,7 @@ const Signup = () => {
                 {...field}
                 required
                 fullWidth
-                label={translations?.sign_up?.psw_label || "Loading"}
+                label={"Password"}
                 type={showPassword ? "text" : "password"}
                 id="password"
                 autoComplete="new-password"
@@ -328,7 +328,7 @@ const Signup = () => {
                 {...field}
                 required
                 fullWidth
-                label={translations?.sign_up?.confirm_psw_label || "Loading"}
+                label={"Confirm Password"}
                 type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
                 error={!!errors.confirmPassword}
@@ -386,7 +386,7 @@ const Signup = () => {
             {isLoading ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
-             <span>{translations?.sign_up?.title || "Loading"}</span>
+             <span>{"Create Account"}</span>
             )}
           </Button>
 
@@ -401,7 +401,7 @@ const Signup = () => {
             }}
           >
             <Typography variant="body2" color="text.secondary">
-              {translations?.sign_up?.already_have_account || "Loading"}
+              {"Already have an account?"}
             </Typography>
             <Link
               href="/login"
@@ -413,7 +413,7 @@ const Signup = () => {
                 },
               }}
             >
-              {translations?.sign_up?.login_here || "Loading"}
+              {"Log in here"}
             </Link>
           </Box>
         </Box>
