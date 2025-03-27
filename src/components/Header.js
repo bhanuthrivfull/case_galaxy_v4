@@ -25,6 +25,7 @@ import axios from "axios";
 import LanguageSelector from "./LanguageSelector";
 import { useLanguage } from "../contexts/LanguageContext";
 
+
 function Header(props) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [cartItemCount, setCartItemCount] = useState(0);
@@ -65,6 +66,89 @@ function Header(props) {
   };
 
 
+  useEffect(() => {
+    const scriptId = "google-translate-script";
+
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.type = "text/javascript";
+      script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      document.body.appendChild(script);
+    }
+
+    window.googleTranslateElementInit = () => {
+      const element = document.getElementById("google_translate_element");
+      if (element && element.innerHTML.trim() === "") {
+        const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+
+        new window.google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,zh-TW,zh-HK",
+            autoDisplay: false,
+            defaultLanguage: savedLanguage,
+          },
+          "google_translate_element"
+        );
+
+        if (savedLanguage && savedLanguage !== 'en') {
+          setTimeout(() => {
+            const selectElement = document.querySelector('.goog-te-combo');
+            if (selectElement) {
+              selectElement.value = savedLanguage;
+              selectElement.dispatchEvent(new Event('change'));
+            }
+          }, 1000);
+        }
+      }
+    };
+
+    const handleLanguageChange = () => {
+      const selectElement = document.querySelector('.goog-te-combo');
+      if (selectElement) {
+        selectElement.addEventListener('change', (e) => {
+          const selectedLanguage = e.target.value;
+          localStorage.setItem('selectedLanguage', selectedLanguage);
+
+          const previousLanguage = localStorage.getItem('previousLanguage');
+          if (selectedLanguage !== previousLanguage) {
+            localStorage.setItem('previousLanguage', selectedLanguage);
+            window.location.reload();
+          }
+        });
+      }
+    };
+
+    const checkForSelectElement = setInterval(() => {
+      const selectElement = document.querySelector('.goog-te-combo');
+      if (selectElement) {
+        handleLanguageChange();
+        clearInterval(checkForSelectElement);
+      }
+    }, 500);
+
+    return () => {
+      clearInterval(checkForSelectElement);
+    };
+  }, []);
+
+  const [reload, setReload] = useState(false);
+
+  useEffect(() => {
+    if (reload) {
+      window.location.reload();
+      setReload(false);
+    }
+  }, [reload]);
+
+  const handleReloadClick = () => {
+    setReload(true);
+  };
+
+
+
+
 
   const handleNavigation = () => {
     navigate("/");
@@ -72,7 +156,7 @@ function Header(props) {
   };
 
   const { translations } = useLanguage()
-console.log('Responss==>',translations)
+  console.log('Responss==>', translations)
   return (
     <>
       <motion.div>
@@ -105,14 +189,37 @@ console.log('Responss==>',translations)
                   }}
                   onClick={handleNavigation}
                 >
-                  {translations?.title || "Loading..."}
+                  Case Galaxy
                 </Typography>
               </motion.div>
 
               {/* Right Menu */}
-              <Box sx={{ display: "flex", alignItems: "center", gap:{xs:0,sm:2} }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0, sm: 2 } }}>
                 {/* Cart Icon */}
-                <LanguageSelector />
+                <Box sx={{ display: props.customStyles }}>
+                  <div id="google_translate_element" />
+                  <style>
+                    {`
+                      #google_translate_element select {
+                        background-color: #f5f5f5;
+                        border: 2px solid #007bff;
+                        border-radius: 8px;
+                        padding: 8px;
+                        font-size: 14px;
+                        color: #333;
+                        outline: none;
+                        transition: all 0.3s ease;
+                      }
+                      #google_translate_element select:hover {
+                        border-color: #0056b3;
+                      }
+                      #google_translate_element select:focus {
+                        border-color: #004085;
+                        box-shadow: 0 0 8px rgba(0, 91, 187, 0.4);
+                      }
+                    `}
+                  </style>
+                </Box>
                 <IconButton
                   color="inherit"
                   component={Link}
@@ -140,7 +247,7 @@ console.log('Responss==>',translations)
                     },
                   }}
                 >
-                  {translations?.logout || "Loading..."}
+                  Logout
                 </Button>
 
                 {/* Mobile Menu Button */}
@@ -182,7 +289,7 @@ console.log('Responss==>',translations)
             }}
           >
             <Typography variant="h6" sx={{ color: "white" }}>
-              {translations?.sm_menu || "Loading..."}
+              Menu
             </Typography>
             <IconButton
               color="inherit"
@@ -194,7 +301,7 @@ console.log('Responss==>',translations)
           </Box>
           <List>
             <ListItem button onClick={handleLogout}>
-              <ListItemText primary={`${translations?.logout || "Loading..."}`} sx={{ color: "white" }} />
+              <ListItemText primary={`Logout`} sx={{ color: "white" }} />
             </ListItem>
           </List>
         </Box>

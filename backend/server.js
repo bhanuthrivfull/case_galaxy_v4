@@ -764,6 +764,25 @@ app.get("/api/products", async (req, res) => {
 //     res.status(500).json({ error: "Server error" });
 //   }
 // });
+
+
+app.get("/api/allproducts", async (req, res) => {
+  try {
+    const allProducts = await mongoose.connection.db
+      .collection("allproducts")
+      .find()
+      .toArray();
+
+    res.status(200).json(allProducts);
+  } catch (error) {
+    console.error("Error fetching all products:", error);
+    res.status(500).json({ 
+      error: "Failed to retrieve all products", 
+      message: error.message 
+    });
+  }
+});
+
 app.get("/api/translations/:lang", async (req, res) => {
   try {
     const { lang } = req.params;

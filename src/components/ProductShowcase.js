@@ -87,7 +87,7 @@ function ProductShowcase({ category }) {
         quantity: 1,
       });
 
-      toast.success(`${product.name} ${translations?.added_to_cart}`, {
+      toast.success(`${product.name} ${"added to cart!"}`, {
         position: "bottom-center",
         autoClose: 3000,
         hideProgressBar: true,
@@ -159,7 +159,7 @@ function ProductShowcase({ category }) {
         textAlign="center"
         sx={{ color: " rgb(0, 0, 0)", mb: 4, fontWeight: "bold" }}
       >
-        {category} {translations?.products_title || "Loading..."}
+        {category} {"Products"}
       </Typography>
       <Grid
         container
@@ -299,7 +299,7 @@ function ProductShowcase({ category }) {
                             },
                           }}
                         >
-                          {translations?.save_title || "Loading..."} {language === "en" ? "₹" : "¥"}
+                          {"Save"} {language === "en" ? "₹" : "¥"}
                           {parseFloat(product.discountPrice).toFixed(2)}
                         </Typography>
                       )}
@@ -337,11 +337,11 @@ function ProductShowcase({ category }) {
                               color: "white",
                             }}
                           />
-                          <span style={{ opacity: 0 }}>{translations?.add_to_cart || "Loading..."}</span>
+                          <span style={{ opacity: 0 }}>{"ADD TO CART"}</span>
                         </>
                       ) : (
                         <span>
-                          {translations?.add_to_cart || "Loading..."}
+                          {"ADD TO CART"}
                         </span>
                       )}
                     </Button>
