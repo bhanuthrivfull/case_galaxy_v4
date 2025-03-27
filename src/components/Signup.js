@@ -35,40 +35,77 @@ const Signup = () => {
   const schema = yup.object().shape({
     name: yup
       .string()
-      .required(translations?.sign_up?.err_msg_name_req)
-      .min(2, translations?.sign_up?.err_msg_two_char)
-      .matches(/^[a-zA-Z\s]*$/, translations?.sign_up?.err_contain_letters),
+      .required("Name is required.")
+      .test(
+        "no-special-chars",
+        "Name cannot contain special characters.",
+        (value) => !/[!@#$%^&*(),?":{}|<>\-_=+]/.test(value)
+      )
+      .test(
+        "no-start-with-space",
+        "Name should not start with a space.",
+        (value) => !/^ /.test(value)
+      )
+      .test(
+        "no-multiple-spaces",
+        "Name should not contain multiple consecutive spaces.",
+        (value) => !/\s{2,}/.test(value)
+      )
+      .test(
+        "no-numbers",
+        "Name cannot contain numbers.",
+        (value) => !/\d/.test(value)
+      )
+      .matches(
+        /^[A-Z][a-zA-Z\s]{2,39}$/,
+        "Name must start with a capital letter, contain only letters and spaces, and be between 3 to 40 characters long."
+      )
+      ,
     email: yup
       .string()
-      .email(translations?.sign_up?.err_valid_email)
-      .required(translations?.sign_up?.err_email_required)
-      .test("is-valid-domain",translations?.sign_up?.err_valid_domain, (value) => {
-        if (!value) return false;
-        const domain = value.split("@")[1];
-        if (!domain) return false;
-
-        const domainParts = domain.split(".");
-        if (domainParts.length < 2) return false;
-
-        const topLevelDomain = domainParts[domainParts.length - 1];
-        return (
-          !domain.startsWith("example.") &&
-          !domain.endsWith(".test") &&
-          /^[a-zA-Z.-]+$/.test(domain) &&
-          topLevelDomain.length >= 2
-        );
-      }),
+      .required("Email is required.")
+      .transform((value) => value.toLowerCase())
+      
+      .test(
+        "max-length",
+        "Email cannot exceed 50 characters.",
+        (value) => !value || value.length <= 50
+      )
+      .test(
+        "no-special-chars",
+        "Email cannot contain special characters.",
+        (value) => !value || !/[!#$%^&*(),?":{}|<>\-_=+]/.test(value)
+      )
+      .test(
+        "starts-with-letter",
+        "Email must start with a letter.",
+        (value) => !value || /^[a-zA-Z]/.test(value)
+      )
+      .matches(
+        /^[a-zA-Z](?!.*\.\.)[a-zA-Z0-9]*(?:\.[a-zA-Z0-9]+)*@[a-zA-Z]+\.(?:com|org|net|edu|gov|co|io|in|biz|info|tv|us|ca|uk|eu)$/,
+        "Please enter a valid email address (user@domain.com)."
+      )
+      .test(
+        "min-length",
+        "Email must be at least 13 characters long.",
+        (value) => !value || value.length >= 13
+      ),
     password: yup
       .string()
-      .required(translations?.sign_up?.err_psw_required)
-      .min(8, translations?.sign_up?.err_psw_char)
+      .required("Password is required.")
+      .test(
+        "no-whitespace",
+        "Password cannot contain spaces.",
+        (value) => !value || !/\s/.test(value)
+      )
       .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, translations?.sign_up?.err_psw_contain
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$/,
+        "Password must be 8-16 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character (!@#$%^&*)."
       ),
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref("password"), null],  translations?.sign_up?.err_psw_match)
-      .required(translations?.sign_up?.confirm_psw),
+      .required("Confirm Password is required.")
+      .oneOf([yup.ref("password"), null], "Passwords must match."),
   });
 
   const {
@@ -229,6 +266,15 @@ const Signup = () => {
                       <Email color="action" />
                     </InputAdornment>
                   ),
+                }}
+                onChange={(e) => {
+                  const lowercaseValue = e.target.value.toLowerCase();
+                  field.onChange({
+                    target: {
+                      name: e.target.name,
+                      value: lowercaseValue
+                    }
+                  });
                 }}
               />
             )}
