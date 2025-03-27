@@ -16,14 +16,10 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useLanguage } from "../contexts/LanguageContext";
 
 const API_BASE_URL =
   process.env.REACT_APP_API_URL || "http://localhost:5000/api";
-
 function ProductShowcase({ category }) {
-  
-  const { translations, language } = useLanguage();
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -51,7 +47,7 @@ function ProductShowcase({ category }) {
     }
   };
 
-  
+
   const handleCardClick = (productId) => {
     navigate(`/product/${productId}`);
   };
@@ -141,7 +137,7 @@ function ProductShowcase({ category }) {
     );
   }
 
-  
+
 
   return (
     <Box
@@ -270,7 +266,7 @@ function ProductShowcase({ category }) {
                           fontSize: { xs: "1rem", sm: "1.2rem" },
                         }}
                       >
-                        {language === "en" ? "₹" : "¥"}
+                        ₹
                         {parseFloat(product.price - product.discountPrice).toFixed(2)}
                       </Typography>
                       {product.discountPrice > 0 && (
@@ -285,8 +281,7 @@ function ProductShowcase({ category }) {
                             fontSize: { xs: "1.2rem", sm: "1.3rem" },
                           }}
                         >
-                          {language === "en" ? "₹" : "¥"}
-                          {product.price}
+                          ₹{product.price}
                         </Typography>
                       )}
                       {product.discountPrice > 0 && (
@@ -302,7 +297,7 @@ function ProductShowcase({ category }) {
                             },
                           }}
                         >
-                          {"Save"} {language === "en" ? "₹" : "¥"}
+                          {"Save"} ₹
                           {parseFloat(product.discountPrice).toFixed(2)}
                         </Typography>
                       )}

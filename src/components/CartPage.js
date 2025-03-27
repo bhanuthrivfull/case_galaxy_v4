@@ -132,7 +132,7 @@ function CartPage() {
     setIsCheckoutOpen(true);
   };
 
-  const { translations,language } = useLanguage();
+  const { translations, language } = useLanguage();
 
   return (
     <>
@@ -168,7 +168,7 @@ function CartPage() {
               fontSize: { xs: "1.5rem", sm: "2rem" },
             }}
           >
-            { "Your Cart"}
+            {"Your Cart"}
           </Typography>
           {cart.items.length === 0 ? (
             <Typography variant="body1" sx={{ mt: 2, color: "text.secondary" }}>
@@ -208,7 +208,7 @@ function CartPage() {
                                   variant="body2"
                                   color="text.primary"
                                 >
-                                  {language==="en"?"₹":"¥"}{(item.productId.price - item.productId.discountPrice).toFixed(2)}
+                                  {language === "en" ? "₹" : "¥"}{(item.productId.price - item.productId.discountPrice).toFixed(2)}
                                 </Typography>
                                 {item.productId.discountPrice && (
                                   <Typography
@@ -221,7 +221,7 @@ function CartPage() {
                                       fontSize: "0.9rem",
                                     }}
                                   >
-                                    {language==="en"?"₹":"¥"}{item.productId.price}
+                                    {language === "en" ? "₹" : "¥"}{item.productId.price}
                                   </Typography>
                                 )}
                                 <Box
@@ -268,8 +268,8 @@ function CartPage() {
               </List>
               <Box sx={{ mt: 5, textAlign: "right" }}>
                 <Typography variant="h6" sx={{ mb: 2 }}>
-                {"Total"}: {language==="en"?"₹":"¥"}{getTotalPrice()}
-                  
+                  {"Total"}: {language === "en" ? "₹" : "¥"}{getTotalPrice()}
+
 
                 </Typography>
                 <Button
