@@ -168,11 +168,11 @@ function CartPage() {
               fontSize: { xs: "1.5rem", sm: "2rem" },
             }}
           >
-            {translations?.cart_modal?.title || "Loading..."}
+            { "Your Cart"}
           </Typography>
           {cart.items.length === 0 ? (
             <Typography variant="body1" sx={{ mt: 2, color: "text.secondary" }}>
-              {translations?.cart_modal?.cart_empty || "Loading..."}
+              {"Your cart is empty"}
             </Typography>
           ) : (
             <Box>
@@ -258,7 +258,7 @@ function CartPage() {
                             onClick={() => removeFromCart(item.productId._id)}
                             color="error"
                           >
-                            {translations?.cart_modal?.remove || "Loading..."}
+                            {"Remove"}
                           </Button>
                         </ListItem>
                         <Divider variant="inset" component="li" />
@@ -268,7 +268,7 @@ function CartPage() {
               </List>
               <Box sx={{ mt: 5, textAlign: "right" }}>
                 <Typography variant="h6" sx={{ mb: 2 }}>
-                {translations?.cart_modal?.total || "Loading..."}: {language==="en"?"₹":"¥"}{getTotalPrice()}
+                {"Total"}: {language==="en"?"₹":"¥"}{getTotalPrice()}
                   
 
                 </Typography>
@@ -280,7 +280,7 @@ function CartPage() {
                   size="large"
                   fullWidth
                 >
-                  {translations?.cart_modal?.btn_title || "Loading..."}
+                  {"Proceed to Buy"}
                 </Button>
               </Box>
             </Box>

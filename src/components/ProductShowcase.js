@@ -22,6 +22,7 @@ const API_BASE_URL =
   process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
 function ProductShowcase({ category }) {
+  
   const { translations, language } = useLanguage();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -39,7 +40,7 @@ function ProductShowcase({ category }) {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${API_BASE_URL}/products`);
+      const response = await axios.get(`${API_BASE_URL}/allproducts`);
       setProducts(response.data);
       setError(null);
     } catch (err) {
@@ -50,6 +51,7 @@ function ProductShowcase({ category }) {
     }
   };
 
+  
   const handleCardClick = (productId) => {
     navigate(`/product/${productId}`);
   };
@@ -139,6 +141,8 @@ function ProductShowcase({ category }) {
     );
   }
 
+  
+
   return (
     <Box
       id="productshowcase"
@@ -167,7 +171,6 @@ function ProductShowcase({ category }) {
         sx={{ display: "flex", justifyContent: "center" }}
       >
         {products
-          .filter(product => product.language === language) // Filter products based on selected language
           .map((product, index) => (
             <Grid item xs={12} sm={6} md={getGridSize()} key={product._id}>
               <motion.div
