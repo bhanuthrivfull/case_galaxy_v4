@@ -28,7 +28,11 @@ function ProductShowcase({ category }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [loadingProducts, setLoadingProducts] = useState({}); // Track loading state per product 
-  console.log('Lanaguge Status=>',localStorage.getItem("selectedLanguage"),);
+  console.log('Lanaguge Status=>', localStorage.getItem("selectedLanguage"),);
+  const selectedLanguage = localStorage.getItem("selectedLanguage");
+  const currencySymbol = selectedLanguage === 'en' ? '₹' : '¥';
+  
+
 
   useEffect(() => {
     fetchProducts();
@@ -298,7 +302,8 @@ function ProductShowcase({ category }) {
                             },
                           }}
                         >
-                          ₹
+                          <span>Save</span> {currencySymbol}
+                          {localStorage.getItem("selectedLanguage") ? "" : ""}
                           {parseFloat(product.discountPrice).toFixed(2)}
                         </Typography>
                       )}
