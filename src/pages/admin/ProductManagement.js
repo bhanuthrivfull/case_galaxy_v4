@@ -31,7 +31,6 @@ import { useLanguage } from '../../contexts/LanguageContext';
 const API_BASE_URL = "http://localhost:5000/api";
 
 const ProductManagement = () => {
-  const { translations } = useLanguage();
   const theme = useTheme();
   const { language } = useLanguage();
 

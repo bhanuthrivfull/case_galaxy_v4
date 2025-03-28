@@ -29,7 +29,6 @@ import { useLanguage } from "../contexts/LanguageContext";
 const API_BASE_URL = "http://localhost:5000/api";
 
 function ProductDetail() {
-  const { translations, language } = useLanguage();
   const { productId } = useParams();
   const navigate = useNavigate();
   const theme = useTheme();

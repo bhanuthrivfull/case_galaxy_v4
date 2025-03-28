@@ -114,7 +114,6 @@ function AdminPanel() {
   };
 
 
-  const { translations } = useLanguage();
   const [value, setValue] = useState(0);
   const { user, logout } = useAuth();
   const [orders, setOrders] = useState([]);

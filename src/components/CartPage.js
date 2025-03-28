@@ -136,7 +136,6 @@ function CartPage() {
     setIsCheckoutOpen(true);
   };
 
-  const { translations, language } = useLanguage();
 
   return (
     <>
