@@ -13,12 +13,13 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useLanguage } from '../../contexts/LanguageContext';
 
 const OrderHistory = ({ orders }) => {
-  const { translations, language } = useLanguage();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const selectedLanguage = localStorage.getItem("selectedLanguage");
+  const currencySymbol = selectedLanguage === 'en' ? '₹' : '¥';
+
 
   const getStatusColor = (status) => {
     const statusColors = {
@@ -27,82 +28,32 @@ const OrderHistory = ({ orders }) => {
       shipped: 'primary',
       delivered: 'success',
       cancelled: 'error',
-      confirmed: 'secondary',
-      cancancelled: 'default',
     };
     return statusColors[status.toLowerCase()] || 'default';
   };
 
-  const statusTranslations = {
-    en: {
-      Pending: "Pending",
-      Processing: "Processing",
-      Shipped: "Shipped",
-      Delivered: "Delivered",
-      Cancelled: "Cancelled",
-      Confirmed: "Confirmed",
-    },
-    zh: {
-      Pending: "待处理",
-      Processing: "处理中",
-      Shipped: "已发货",
-      Delivered: "已送达",
-      Cancelled: "已取消",
-      Confirmed: "已确认",
-    },
-  };
-  
-  const normalizeStatus = (status) => {
-    console.log('Status=====>',status)
-    const normalized = {
-      "pending": "Pending",
-      "processing": "Processing",
-      "shipped": "Shipped",
-      "delivered": "Delivered",
-      "cancelled": "Cancelled",
-      "confirmed": "Confirmed",
-      "待处理": "Pending",
-      "处理中": "Processing",
-      "已发货": "Shipped",
-      "已送达": "Delivered",
-      "已取消": "Cancelled",
-      "已确认": "Confirmed",
-    };
-    return normalized[status.toLowerCase()] || status;
-  };
-  
-  // Get translated status while ensuring fallback to English
-  const getTranslatedStatus = (status) => {
-    const normalizedStatus = normalizeStatus(status);
-    return (
-      statusTranslations[language]?.[normalizedStatus] ||
-      statusTranslations["en"][normalizedStatus] ||
-      status
-    );
-  };
-  
   return (
     <Paper
       elevation={3}
       sx={{
         p: 2,
         borderRadius: 2,
-        background: "linear-gradient(135deg, rgba(178, 185, 158, 0.07), rgb(95, 246, 105))",
+        background: "linear-gradient(135deg,rgba(178, 185, 158, 0.07),rgb(95, 246, 105))" // Linear gradient background
       }}
     >
       <Typography variant="h6" gutterBottom sx={{ mb: 3 }}>
-        {translations?.admin?.order_tab?.order_history || "Loading..."}
+        Order History
       </Typography>
 
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>{translations?.admin?.order_tab?.order_id || "Loading..."}</TableCell>
-              {!isMobile && <TableCell>{translations?.admin?.order_tab?.customer || "Loading..."}</TableCell>}
-              <TableCell>{translations?.admin?.order_tab?.total || "Loading..."}</TableCell>
-              <TableCell>{translations?.admin?.order_tab?.status || "Loading..."}</TableCell>
-              <TableCell>{translations?.admin?.order_tab?.date || "Loading..."}</TableCell>
+              <TableCell>Order ID</TableCell>
+              {!isMobile && <TableCell>Customer</TableCell>}
+              <TableCell>Total</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Date</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -119,10 +70,10 @@ const OrderHistory = ({ orders }) => {
                     </Box>
                   </TableCell>
                 )}
-                <TableCell>{language==="en"?"₹":"¥"}{order.totalAmount.toFixed(2)}</TableCell>
+                <TableCell>{currencySymbol}{order.totalAmount.toFixed(2)}</TableCell>
                 <TableCell>
                   <Chip
-                    label={getTranslatedStatus(order.orderStatus)}
+                    label={order.orderStatus}
                     color={getStatusColor(order.orderStatus)}
                     size="small"
                   />

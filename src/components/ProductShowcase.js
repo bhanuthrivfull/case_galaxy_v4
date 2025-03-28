@@ -28,10 +28,10 @@ function ProductShowcase({ category }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [loadingProducts, setLoadingProducts] = useState({}); // Track loading state per product 
-  console.log('Lanaguge Status=>', localStorage.getItem("selectedLanguage"),);
+
   const selectedLanguage = localStorage.getItem("selectedLanguage");
   const currencySymbol = selectedLanguage === 'en' ? '₹' : '¥';
-  
+
 
 
   useEffect(() => {
@@ -271,7 +271,7 @@ function ProductShowcase({ category }) {
                           fontSize: { xs: "1rem", sm: "1.2rem" },
                         }}
                       >
-                        ₹
+                        {currencySymbol}
                         {parseFloat(product.price - product.discountPrice).toFixed(2)}
                       </Typography>
                       {product.discountPrice > 0 && (
@@ -286,7 +286,7 @@ function ProductShowcase({ category }) {
                             fontSize: { xs: "1.2rem", sm: "1.3rem" },
                           }}
                         >
-                          ₹{product.price}
+                          {currencySymbol}{product.price}
                         </Typography>
                       )}
                       {product.discountPrice > 0 && (

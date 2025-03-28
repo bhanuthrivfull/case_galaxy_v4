@@ -141,6 +141,11 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
   const navigate = useNavigate()
 
+  const selectedLanguage = localStorage.getItem("selectedLanguage");
+  const currencySymbol = selectedLanguage === 'en' ? '₹' : '¥';
+
+
+
   // Validation patterns
   const patterns = {
     name: /^[a-zA-Z\s]{2,50}$/,
@@ -1497,7 +1502,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                                   {item.quantity}
                                 </TableCell>
                                 <TableCell align="right">
-                                  {language === "en" ? "₹" : "¥"}
+                                  {currencySymbol}
                                   {((item.productId.price - item.productId.discountPrice) * item.quantity).toFixed(2)}
                                 </TableCell>
                               </TableRow>
@@ -1519,7 +1524,7 @@ export default function MultiStepCheckoutForm({ totalPrice, onClose }) {
                           <strong>Your Cart</strong>
                         </Typography>
                         <Typography variant="subtitle1" color="primary">
-                          <strong>{language === "en" ? "₹" : "¥"}{totalPrice}</strong>
+                          <strong>{currencySymbol}{totalPrice}</strong>
                         </Typography>
                       </Box>
                     </Paper>

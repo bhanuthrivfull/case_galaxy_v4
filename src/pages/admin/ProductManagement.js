@@ -38,6 +38,12 @@ const ProductManagement = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery(theme.breakpoints.down("md"));
 
+  const selectedLanguage = localStorage.getItem("selectedLanguage");
+  const currencySymbol = selectedLanguage === 'en' ? '₹' : '¥';
+
+
+
+
   const [formData, setFormData] = useState({
     name: "",
     model: "",
@@ -369,7 +375,7 @@ const ProductManagement = () => {
                 error={!!formErrors.price}
                 InputProps={{
                   startAdornment: (
-                    <InputAdornment position="start">{language === "en" ? "₹" : "¥"}</InputAdornment>
+                    <InputAdornment position="start">{currencySymbol}</InputAdornment>
                   ),
                 }}
                 size={isMobile ? "small" : "medium"}
@@ -393,7 +399,7 @@ const ProductManagement = () => {
                 error={!!formErrors.discountPrice}
                 InputProps={{
                   startAdornment: (
-                    <InputAdornment position="start">{language === "en" ? "₹" : "¥"}</InputAdornment>
+                    <InputAdornment position="start">{currencySymbol}</InputAdornment>
                   ),
                 }}
                 size={isMobile ? "small" : "medium"}

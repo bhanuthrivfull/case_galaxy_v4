@@ -29,7 +29,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 const API_BASE_URL = "http://localhost:5000/api";
 
 function ProductDetail() {
-  const {translations,language} = useLanguage();
+  const { translations, language } = useLanguage();
   const { productId } = useParams();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -43,6 +43,11 @@ function ProductDetail() {
   const [addingToCart, setAddingToCart] = useState(false);
   const [processingBuyNow, setProcessingBuyNow] = useState(false);
   const [openImageDialog, setOpenImageDialog] = useState(false);
+
+  const selectedLanguage = localStorage.getItem("selectedLanguage");
+  const currencySymbol = selectedLanguage === 'en' ? '₹' : '¥';
+
+
 
   useEffect(() => {
     fetchProductDetails();
@@ -287,7 +292,7 @@ function ProductDetail() {
                     fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem" },
                   }}
                 >
-                  {language==="en"?"₹":"¥"}{(product.price - product.discountPrice).toFixed(2)}
+                  {currencySymbol}{(product.price - product.discountPrice).toFixed(2)}
                 </Typography>
 
                 {product.discountPrice && (
@@ -296,7 +301,7 @@ function ProductDetail() {
                     color="error"
                     sx={{ mb: 1, textDecoration: "line-through" }}
                   >
-                    {language==="en"?"₹":"¥"}{product.price}
+                    {currencySymbol}{product.price}
                   </Typography>
                 )}
 
@@ -338,7 +343,7 @@ function ProductDetail() {
                         <span style={{ opacity: 0 }}>{"ADD TO CART"}</span>
                       </>
                     ) : (
-                     <span>{"ADD TO CART"}</span>
+                      <span>{"ADD TO CART"}</span>
                     )}
                   </Button>
                 </Box>

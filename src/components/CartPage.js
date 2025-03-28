@@ -33,6 +33,10 @@ function CartPage() {
 
   const userEmail = localStorage.getItem("userEmail");
   const [userId, setUserId] = useState(null);
+  const selectedLanguage = localStorage.getItem("selectedLanguage");
+  const currencySymbol = selectedLanguage === 'en' ? '₹' : '¥';
+
+
 
   useEffect(() => {
     if (!userEmail) {
@@ -208,7 +212,7 @@ function CartPage() {
                                   variant="body2"
                                   color="text.primary"
                                 >
-                                  ₹{(item.productId.price - item.productId.discountPrice).toFixed(2)}
+                                  {currencySymbol}{(item.productId.price - item.productId.discountPrice).toFixed(2)}
                                 </Typography>
                                 {item.productId.discountPrice && (
                                   <Typography
@@ -221,7 +225,7 @@ function CartPage() {
                                       fontSize: "0.9rem",
                                     }}
                                   >
-                                    ₹{item.productId.price}
+                                    {currencySymbol}{item.productId.price}
                                   </Typography>
                                 )}
                                 <Box
@@ -268,7 +272,7 @@ function CartPage() {
               </List>
               <Box sx={{ mt: 5, textAlign: "right" }}>
                 <Typography variant="h6" sx={{ mb: 2 }}>
-                  {"Total"}: ₹{getTotalPrice()}
+                  {"Total"}: {currencySymbol}{getTotalPrice()}
 
 
                 </Typography>

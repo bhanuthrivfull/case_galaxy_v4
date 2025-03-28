@@ -17,16 +17,16 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useLanguage } from "../../contexts/LanguageContext";
 
 const API_BASE_URL = "http://localhost:5000/api";
 
 const OrderManagement = ({ orders, setOrders }) => {
-  const {translations,language} = useLanguage();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [loading, setLoading] = useState({});
-
+  const selectedLanguage = localStorage.getItem("selectedLanguage");
+  const currencySymbol = selectedLanguage === 'en' ? '₹' : '¥';
+  
   const orderStatuses = [
     "Pending",
     "Processing",
@@ -61,30 +61,27 @@ const OrderManagement = ({ orders, setOrders }) => {
     }
   };
 
-
   return (
     <Paper
       elevation={3}
       sx={{
         p: 2,
         borderRadius: 2,
-                background: "linear-gradient(135deg,rgba(178, 185, 158, 0.07),rgb(95, 246, 105))",
- // Add linear gradient background here
+         background: "linear-gradient(135deg,rgba(178, 185, 158, 0.07),rgb(95, 246, 105))", // Add linear gradient background here
       }}
     >
       <Typography variant="h6" gutterBottom sx={{ mb: 3 }}>
-        {/* Order Management */}
-        {translations?.admin?.order_management_tab?.order_management || "Loading..."}
+        Order Management
       </Typography>
 
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>{translations?.admin?.order_management_tab?.order_id || "Loading..."}</TableCell>
-              {!isMobile && <TableCell>{translations?.admin?.order_management_tab?.customer || "Loading..."}</TableCell>}
-              <TableCell>{translations?.admin?.order_management_tab?.total || "Loading..."}</TableCell>
-              <TableCell>{translations?.admin?.order_management_tab?.status || "Loading..."}</TableCell>
+              <TableCell>Order ID</TableCell>
+              {!isMobile && <TableCell>Customer</TableCell>}
+              <TableCell>Total</TableCell>
+              <TableCell>Status</TableCell>
               {/* <TableCell>Actions</TableCell> */}
             </TableRow>
           </TableHead>
@@ -102,7 +99,7 @@ const OrderManagement = ({ orders, setOrders }) => {
                     </Box>
                   </TableCell>
                 )}
-                <TableCell>{language==="en"?"₹":"¥"}{order.totalAmount.toFixed(2)}</TableCell>
+                <TableCell>{currencySymbol}{order.totalAmount.toFixed(2)}</TableCell>
                 <TableCell>
                   <Select
                     value={order.orderStatus}
@@ -113,12 +110,11 @@ const OrderManagement = ({ orders, setOrders }) => {
                     disabled={loading[order._id]}
                     sx={{ minWidth: 120 }}
                   >
-                    {translations?.admin?.order_management_tab?.options.map((status) => (
+                    {orderStatuses.map((status) => (
                       <MenuItem key={status} value={status.toLowerCase()}>
                         {status}
                       </MenuItem>
                     ))}
-                    
                   </Select>
                 </TableCell>
                 {/* <TableCell>
