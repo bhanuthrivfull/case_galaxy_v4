@@ -26,13 +26,11 @@ import {
   useTheme,
 } from '@mui/material';
 import React, { useState } from 'react';
-import { useLanguage } from '../../contexts/LanguageContext';
 
 const API_BASE_URL = "http://localhost:5000/api";
 
 const ProductManagement = () => {
   const theme = useTheme();
-  const { language } = useLanguage();
 
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery(theme.breakpoints.down("md"));

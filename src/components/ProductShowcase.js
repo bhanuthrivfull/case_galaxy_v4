@@ -41,7 +41,7 @@ function ProductShowcase({ category }) {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${API_BASE_URL}/allproducts`);
+      const response = await axios.get(`${API_BASE_URL}/products`);
       setProducts(response.data);
       setError(null);
     } catch (err) {

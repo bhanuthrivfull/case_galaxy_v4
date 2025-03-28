@@ -24,7 +24,6 @@ import Header from "./Header";
 import MultiStepCheckoutForm from "./MultiStepCheckoutForm";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useLanguage } from "../contexts/LanguageContext";
 
 const API_BASE_URL = "http://localhost:5000/api";
 
