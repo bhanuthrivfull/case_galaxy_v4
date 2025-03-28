@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Paper,
   Table,
@@ -19,6 +19,29 @@ const OrderHistory = ({ orders }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const selectedLanguage = localStorage.getItem("selectedLanguage");
   const currencySymbol = selectedLanguage === 'en' ? '₹' : '¥';
+
+
+
+  // Price Converter
+  const [exchangeRates, setExchangeRates] = useState({});
+  const [currency, setCurrency] = useState("INR");
+
+  const getCurrencyFromLanguage = () => {
+    const lang = localStorage.getItem("selectedLanguage");
+    if (lang === "zh-TW") return "CNY";
+    return "INR";
+  };
+
+  useEffect(() => {
+    fetch("https://api.exchangerate-api.com/v4/latest/INR")
+      .then(res => res.json())
+      .then(data => setExchangeRates(data.rates))
+      .catch(error => console.error("Error fetching exchange rates:", error));
+
+    setCurrency(getCurrencyFromLanguage());
+  }, []);
+
+
 
 
   const getStatusColor = (status) => {
@@ -57,33 +80,47 @@ const OrderHistory = ({ orders }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {orders.map((order) => (
-              <TableRow key={order._id} hover>
-                <TableCell>{order._id.slice(-6)}</TableCell>
-                {!isMobile && (
-                  <TableCell>
-                    <Box>
-                      <Typography variant="body2">{order.userId.name}</Typography>
-                      <Typography variant="caption" color="textSecondary">
-                        {order.userId.email}
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                )}
-                <TableCell>{currencySymbol}{order.totalAmount.toFixed(2)}</TableCell>
-                <TableCell>
-                  <Chip
-                    label={order.orderStatus}
-                    color={getStatusColor(order.orderStatus)}
-                    size="small"
-                  />
-                </TableCell>
-                <TableCell>
-                  {new Date(order.createdAt).toLocaleDateString()}
+            {Object.keys(exchangeRates).length > 0 ? (
+              orders.map((order) => {
+                const rate = exchangeRates[currency] || 1; // Default to 1 if no rate found
+                const convertedPrice = (order.totalAmount * rate).toFixed(2);
+
+                return (
+                  <TableRow key={order._id} hover>
+                    <TableCell>{order._id.slice(-6)}</TableCell>
+                    {!isMobile && (
+                      <TableCell>
+                        <Box>
+                          <Typography variant="body2">{order.userId.name}</Typography>
+                          <Typography variant="caption" color="textSecondary">
+                            {order.userId.email}
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                    )}
+                    <TableCell>{currencySymbol}{convertedPrice}</TableCell> {/* Updated here */}
+                    <TableCell>
+                      <Chip
+                        label={order.orderStatus}
+                        color={getStatusColor(order.orderStatus)}
+                        size="small"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      {new Date(order.createdAt).toLocaleDateString()}
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            ) : (
+              <TableRow>
+                <TableCell colSpan={5} align="center">
+                  Loading exchange rates...
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
+
         </Table>
       </TableContainer>
     </Paper>

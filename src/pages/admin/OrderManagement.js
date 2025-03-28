@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Paper,
   Table,
@@ -20,13 +20,20 @@ import { toast } from "react-toastify";
 
 const API_BASE_URL = "http://localhost:5000/api";
 
+const CURRENCY_SYMBOLS = {
+  INR: "₹",
+  CNY: "¥",
+  USD: "$"
+};
+
 const OrderManagement = ({ orders, setOrders }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [loading, setLoading] = useState({});
-  const selectedLanguage = localStorage.getItem("selectedLanguage");
-  const currencySymbol = selectedLanguage === 'en' ? '₹' : '¥';
-  
+  const [exchangeRates, setExchangeRates] = useState({ INR: 1 });
+  const [currency, setCurrency] = useState("INR");
+  const [isLoadingRates, setIsLoadingRates] = useState(true);
+
   const orderStatuses = [
     "Pending",
     "Processing",
@@ -34,6 +41,65 @@ const OrderManagement = ({ orders, setOrders }) => {
     "Delivered",
     "Cancelled",
   ];
+
+  // Get currency based on language
+  const getCurrencyFromLanguage = () => {
+    const lang = localStorage.getItem("selectedLanguage");
+    return lang === "zh-TW" ? "CNY" : "INR";
+  };
+
+  // Fetch exchange rates
+  useEffect(() => {
+    const fetchExchangeRates = async () => {
+      setIsLoadingRates(true);
+      try {
+        const response = await fetch("https://api.exchangerate-api.com/v4/latest/INR");
+        const data = await response.json();
+        
+        if (data && data.rates) {
+          setExchangeRates({
+            ...data.rates,
+            INR: 1 // Ensure base rate is 1
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch rates, using defaults:", error);
+        // Fallback rates if API fails
+        setExchangeRates({
+          USD: 0.012,
+          CNY: 0.087,
+          INR: 1
+        });
+      } finally {
+        setIsLoadingRates(false);
+      }
+    };
+
+    fetchExchangeRates();
+  }, []);
+
+  // Update currency when language changes
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      const newCurrency = getCurrencyFromLanguage();
+      setCurrency(newCurrency);
+    };
+
+    // Set initial currency
+    handleLanguageChange();
+
+    // Listen for storage changes
+    window.addEventListener('storage', handleLanguageChange);
+    return () => window.removeEventListener('storage', handleLanguageChange);
+  }, []);
+
+  // Format currency display without commas
+  const formatCurrency = (amount) => {
+    const symbol = CURRENCY_SYMBOLS[currency] || currency;
+    // Convert to string and remove any commas
+    const amountString = (amount * (exchangeRates[currency] || 1)).toFixed(2).replace(/,/g, '');
+    return `${symbol} ${amountString}`;
+  };
 
   const handleStatusChange = async (orderId, newStatus) => {
     setLoading((prev) => ({ ...prev, [orderId]: true }));
@@ -61,13 +127,17 @@ const OrderManagement = ({ orders, setOrders }) => {
     }
   };
 
+  if (isLoadingRates) {
+    return <Typography>Loading exchange rates...</Typography>;
+  }
+
   return (
     <Paper
       elevation={3}
       sx={{
         p: 2,
         borderRadius: 2,
-         background: "linear-gradient(135deg,rgba(178, 185, 158, 0.07),rgb(95, 246, 105))", // Add linear gradient background here
+        background: "linear-gradient(135deg,rgba(178, 185, 158, 0.07),rgb(95, 246, 105))",
       }}
     >
       <Typography variant="h6" gutterBottom sx={{ mb: 3 }}>
@@ -82,7 +152,6 @@ const OrderManagement = ({ orders, setOrders }) => {
               {!isMobile && <TableCell>Customer</TableCell>}
               <TableCell>Total</TableCell>
               <TableCell>Status</TableCell>
-              {/* <TableCell>Actions</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -99,7 +168,7 @@ const OrderManagement = ({ orders, setOrders }) => {
                     </Box>
                   </TableCell>
                 )}
-                <TableCell>{currencySymbol}{order.totalAmount.toFixed(2)}</TableCell>
+                <TableCell>{formatCurrency(order.totalAmount)}</TableCell>
                 <TableCell>
                   <Select
                     value={order.orderStatus}
@@ -117,18 +186,6 @@ const OrderManagement = ({ orders, setOrders }) => {
                     ))}
                   </Select>
                 </TableCell>
-                {/* <TableCell>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    onClick={() =>
-                      handleStatusChange(order._id, order.orderStatus)
-                    }
-                    disabled={loading[order._id]}
-                  >
-                    Update
-                  </Button>
-                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>

@@ -240,7 +240,7 @@ function AdminPanel() {
               }}
             >
               <Typography variant="h6">{"Admin Panel"}</Typography>
-              <Box>
+              <Box sx={{display:'flex'}}>
                 {/* Menu Button */}
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                   <Tooltip title="Language" placement="bottom">
