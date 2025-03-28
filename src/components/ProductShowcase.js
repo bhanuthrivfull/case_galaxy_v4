@@ -28,6 +28,7 @@ function ProductShowcase({ category }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [loadingProducts, setLoadingProducts] = useState({}); // Track loading state per product 
+  console.log('Lanaguge Status=>',localStorage.getItem("selectedLanguage"),);
 
   useEffect(() => {
     fetchProducts();
@@ -297,7 +298,7 @@ function ProductShowcase({ category }) {
                             },
                           }}
                         >
-                          {"Save"} ₹
+                          ₹
                           {parseFloat(product.discountPrice).toFixed(2)}
                         </Typography>
                       )}

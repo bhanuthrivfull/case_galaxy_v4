@@ -620,6 +620,37 @@ app.get("/api/products/:category", async (req, res) => {
   }
 });
 
+
+// Add New Products
+
+app.post("/api/add-products", async (req, res) => {
+  try {
+    const productData = req.body;
+    
+    const { language, ...allProductData } = productData;
+    const allProductResult = await mongoose.connection.db
+      .collection("allproducts")
+      .insertOne(allProductData);
+    console.log(allProductData)
+    // Respond with success message and details
+    res.status(201).json({
+      message: "Product added successfully",
+      productId: productResult._id,
+      allProductId: allProductResult.insertedId,
+      product: productWithLanguage
+    });
+
+  } catch (error) {
+    console.error("Error adding product:", error);
+    res.status(500).json({ 
+      error: "Failed to add product", 
+      message: error.message 
+    });
+  }
+});
+
+
+
 // Add to cart
 app.post("/api/cart/add", async (req, res) => {
   try {
