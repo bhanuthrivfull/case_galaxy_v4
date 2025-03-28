@@ -45,6 +45,24 @@ function ProductDetail() {
   const selectedLanguage = localStorage.getItem("selectedLanguage");
   const currencySymbol = selectedLanguage === 'en' ? '₹' : '¥';
 
+  // Price Converter
+  const [exchangeRates, setExchangeRates] = useState({});
+  const [currency, setCurrency] = useState("INR");
+
+  const getCurrencyFromLanguage = () => {
+    const lang = localStorage.getItem("selectedLanguage");
+    if (lang === "zh-TW") return "CNY";
+    return "INR";
+  };
+
+  useEffect(() => {
+    fetch("https://api.exchangerate-api.com/v4/latest/INR")
+      .then(res => res.json())
+      .then(data => setExchangeRates(data.rates))
+      .catch(error => console.error("Error fetching exchange rates:", error));
+
+    setCurrency(getCurrencyFromLanguage());
+  }, []);
 
 
   useEffect(() => {
@@ -175,6 +193,18 @@ function ProductDetail() {
     );
   }
 
+  const orgPrice = (product.price - product.discountPrice).toFixed(2);
+  const conOrgPrice = exchangeRates[currency]
+    ? (orgPrice * exchangeRates[currency]).toFixed(2)
+    : orgPrice;
+
+  const actualPrice = product.price;
+  const conActPrice = exchangeRates[currency]
+    ? (actualPrice * exchangeRates[currency]).toFixed(2)
+    : actualPrice;
+
+
+
   return (
     <>
       <Header />
@@ -290,7 +320,7 @@ function ProductDetail() {
                     fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem" },
                   }}
                 >
-                  {currencySymbol}{(product.price - product.discountPrice).toFixed(2)}
+                  {currencySymbol} {conOrgPrice}
                 </Typography>
 
                 {product.discountPrice && (
@@ -299,7 +329,7 @@ function ProductDetail() {
                     color="error"
                     sx={{ mb: 1, textDecoration: "line-through" }}
                   >
-                    {currencySymbol}{product.price}
+                    {currencySymbol}{conActPrice}
                   </Typography>
                 )}
 

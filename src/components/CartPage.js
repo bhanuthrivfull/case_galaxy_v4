@@ -23,7 +23,6 @@ import { useLanguage } from "../contexts/LanguageContext.js";
 
 const API_BASE_URL = "http://localhost:5000/api";
 
-
 function CartPage() {
   const [cart, setCart] = useState({ items: [] });
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -35,8 +34,6 @@ function CartPage() {
   const [userId, setUserId] = useState(null);
   const selectedLanguage = localStorage.getItem("selectedLanguage");
   const currencySymbol = selectedLanguage === 'en' ? '₹' : '¥';
-
-
 
   useEffect(() => {
     if (!userEmail) {
@@ -70,7 +67,9 @@ function CartPage() {
       setLoading(true);
       const response = await axios.get(`${API_BASE_URL}/cart/${userId}`);
       const cartData = response.data || { items: [] };
-      setCart({ ...cartData, items: cartData.items || [] });
+      // Filter out any items with null productId
+      const validItems = (cartData.items || []).filter(item => item?.productId);
+      setCart({ ...cartData, items: validItems });
       setError(null);
     } catch (err) {
       setError("Failed to load cart.");
@@ -84,12 +83,15 @@ function CartPage() {
     if (!productId) return;
     try {
       await axios.delete(`${API_BASE_URL}/cart/${userId}/item/${productId}`);
-      setCart((prevCart) => ({
-        ...prevCart,
-        items: prevCart.items.filter(
+      setCart(prevCart => {
+        const updatedItems = prevCart.items.filter(
           (item) => item?.productId?._id !== productId
-        ),
-      }));
+        );
+        return {
+          ...prevCart,
+          items: updatedItems
+        };
+      });
       toast.success("Item removed from cart!");
     } catch (err) {
       toast.error("Failed to remove item.");
@@ -124,6 +126,7 @@ function CartPage() {
   };
 
   const getTotalPrice = () => {
+    if (cart.items.length === 0) return "0.00";
     return cart.items
       .reduce((total, item) => {
         if (!item?.productId?.price) return total;
@@ -133,9 +136,12 @@ function CartPage() {
   };
 
   const handleProceedToBuy = () => {
+    if (cart.items.length === 0) {
+      toast.error("Your cart is empty!");
+      return;
+    }
     setIsCheckoutOpen(true);
   };
-
 
   return (
     <>
@@ -152,15 +158,14 @@ function CartPage() {
         <Paper
           elevation={3}
           sx={{
-            p: { xs: 2, sm: 4, md: 5 }, // More padding on larger screens
-            mt: { xs: 8, sm: 12, md: 15 }, // Increased margin-top for header gap
-            // bgcolor: "background.paper",
+            p: { xs: 2, sm: 4, md: 5 },
+            mt: { xs: 8, sm: 12, md: 15 },
             background: "linear-gradient(45deg,rgb(255, 255, 255) 0%,rgb(255, 255, 255) 100%)",
             width: "85%",
             display: "flex",
             flexDirection: "column",
             marginBottom: "30px",
-            gap: { xs: 2, sm: 3, md: 4 }, // Adds gap between child elements inside Paper
+            gap: { xs: 2, sm: 3, md: 4 },
           }}
         >
           <Typography
@@ -173,10 +178,25 @@ function CartPage() {
           >
             {"Your Cart"}
           </Typography>
-          {cart.items.length === 0 ? (
+          
+          {loading ? (
             <Typography variant="body1" sx={{ mt: 2, color: "text.secondary" }}>
-              {"Your cart is empty"}
+              Loading your cart...
             </Typography>
+          ) : cart.items.length === 0 ? (
+            <Box sx={{ textAlign: 'center', py: 4 }}>
+              <ShoppingCart sx={{ fontSize: 48, color: 'text.disabled', mb: 2 }} />
+              <Typography variant="body1" sx={{ mt: 2, color: "text.secondary" }}>
+                {"Your cart is empty"}
+              </Typography>
+              <Button 
+                variant="outlined" 
+                sx={{ mt: 3 }}
+                onClick={() => navigate('/')}
+              >
+                Continue Shopping
+              </Button>
+            </Box>
           ) : (
             <Box>
               <List>
@@ -272,8 +292,6 @@ function CartPage() {
               <Box sx={{ mt: 5, textAlign: "right" }}>
                 <Typography variant="h6" sx={{ mb: 2 }}>
                   {"Total"}: {currencySymbol}{getTotalPrice()}
-
-
                 </Typography>
                 <Button
                   variant="contained"

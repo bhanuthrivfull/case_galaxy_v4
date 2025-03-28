@@ -32,6 +32,26 @@ function ProductShowcase({ category }) {
   const selectedLanguage = localStorage.getItem("selectedLanguage");
   const currencySymbol = selectedLanguage === 'en' ? '₹' : '¥';
 
+  const [exchangeRates, setExchangeRates] = useState({});
+  const [currency, setCurrency] = useState("INR");
+
+  const getCurrencyFromLanguage = () => {
+    const lang = localStorage.getItem("selectedLanguage");
+    if (lang === "zh-TW") return "CNY";
+    return "INR";
+  };
+
+
+  useEffect(() => {
+    fetch("https://api.exchangerate-api.com/v4/latest/INR")
+      .then(res => res.json())
+      .then(data => setExchangeRates(data.rates))
+      .catch(error => console.error("Error fetching exchange rates:", error));
+
+    setCurrency(getCurrencyFromLanguage());
+  }, []);
+
+
 
 
   useEffect(() => {
@@ -166,13 +186,21 @@ function ProductShowcase({ category }) {
       >
         {category} {"Products"}
       </Typography>
-      <Grid
-        container
-        spacing={2}
-        sx={{ display: "flex", justifyContent: "center" }}
-      >
-        {products
-          .map((product, index) => (
+
+      <Grid container spacing={2} sx={{ display: "flex", justifyContent: "center" }}>
+        {products.map((product, index) => {
+          // Convert prices based on selected currency
+          const convertedPrice = exchangeRates[currency]
+            ? (product.price * exchangeRates[currency]).toFixed(2)
+            : product.price.toFixed(2);
+
+          const convertedDiscountPrice = exchangeRates[currency]
+            ? (product.discountPrice * exchangeRates[currency]).toFixed(2)
+            : product.discountPrice.toFixed(2);
+
+          const convertedFinalPrice = (convertedPrice - convertedDiscountPrice).toFixed(2);
+
+          return (
             <Grid item xs={12} sm={6} md={getGridSize()} key={product._id}>
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
@@ -185,7 +213,7 @@ function ProductShowcase({ category }) {
                   sx={{
                     backgroundImage: 'linear-gradient(45deg,rgb(255, 255, 255),rgb(255, 255, 255))',
                     borderRadius: 3,
-                    height: "450px", // Fixed height for all cards
+                    height: "450px",
                     display: "flex",
                     flexDirection: "column",
                     boxShadow: 4,
@@ -201,7 +229,7 @@ function ProductShowcase({ category }) {
                     component="img"
                     sx={{
                       width: "100%",
-                      height: 200, // Fixed height for the image
+                      height: 200,
                       objectFit: "contain",
                       backgroundColor: "white",
                       transition: "transform 0.3s ease",
@@ -224,7 +252,7 @@ function ProductShowcase({ category }) {
                       boxShadow: 4,
                       borderRadius: "12px",
                       backgroundColor: 'rgb(114, 245, 248)',
-                      overflow: "auto", // Allow scrolling if content overflows
+                      overflow: "auto",
                     }}
                   >
                     <Typography
@@ -272,8 +300,9 @@ function ProductShowcase({ category }) {
                         }}
                       >
                         {currencySymbol}
-                        {parseFloat(product.price - product.discountPrice).toFixed(2)}
+                        {convertedFinalPrice}
                       </Typography>
+
                       {product.discountPrice > 0 && (
                         <Typography
                           variant="body2"
@@ -286,9 +315,10 @@ function ProductShowcase({ category }) {
                             fontSize: { xs: "1.2rem", sm: "1.3rem" },
                           }}
                         >
-                          {currencySymbol}{product.price}
+                          {currencySymbol}{convertedPrice}
                         </Typography>
                       )}
+
                       {product.discountPrice > 0 && (
                         <Typography
                           variant="body2"
@@ -303,11 +333,11 @@ function ProductShowcase({ category }) {
                           }}
                         >
                           <span>Save</span> {currencySymbol}
-                          {localStorage.getItem("selectedLanguage") ? "" : ""}
-                          {parseFloat(product.discountPrice).toFixed(2)}
+                          {convertedDiscountPrice}
                         </Typography>
                       )}
                     </Box>
+
                     <Button
                       variant="contained"
                       onClick={(e) => handleAddToCart(e, product)}
@@ -324,7 +354,7 @@ function ProductShowcase({ category }) {
                           bgcolor: "",
                         },
                         "&.Mui-disabled": {
-                          color: "rgb(0, 0, 0) !important",  // Force color to black
+                          color: "rgb(0, 0, 0) !important",
                           backgroundColor: "rgba(255, 255, 255, 0.46) !important",
                           boxShadow: "none !important",
                         },
@@ -353,8 +383,10 @@ function ProductShowcase({ category }) {
                 </Card>
               </motion.div>
             </Grid>
-          ))}
+          );
+        })}
       </Grid>
+
     </Box>
   );
 }
