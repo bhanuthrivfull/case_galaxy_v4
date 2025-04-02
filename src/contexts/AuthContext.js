@@ -86,7 +86,9 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
-      localStorage.removeItem('token');
+      // localStorage.removeItem('token');
+      localStorage.clear();
+      sessionStorage.clear();
       delete axios.defaults.headers.common['Authorization'];
       setUser(null);
       if (inactivityTimeoutRef.current)
