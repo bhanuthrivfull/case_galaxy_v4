@@ -62,10 +62,12 @@ function Header(props) {
   }, [currentUser]);
 
   const handleLogout = () => {
-    logout();
+    localStorage.clear();
+    sessionStorage.clear();
+    logout(); 
     navigate("/login");
   };
-
+  
 
   useEffect(() => {
     const scriptId = "google-translate-script";
